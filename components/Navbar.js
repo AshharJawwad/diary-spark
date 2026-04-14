@@ -17,7 +17,7 @@ const Navbar = () => {
     <nav className="w-full flex items-center sticky justify-around px-6 py-4 top-0 border-b bg-background/80 backdrop-blur-md">
       {/* Logo */}
       <Link href={"/"}>
-        <div className="text-2xl font-bold text-gray-900 tracking-tight">
+        <div className="text-2xl font-bold text-gray-900 dark:text-white tracking-tight">
           DiarySpark
         </div>
       </Link>
@@ -77,9 +77,6 @@ const Navbar = () => {
                     <div className="h-18 w-full my-10 p-4 justify-center items-center">
                       <div className="text-start text-lg font-bold">
                         Accessibility
-                      </div>
-                      <div className="flex my-6">
-                        <ModeToggle className="h-6 w-6 rounded-full border-gray-300" />
                       </div>
                     </div>
                     <div className="flex mt-12 w-full h-8 p-4 justify-center items-center">
