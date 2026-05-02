@@ -89,15 +89,17 @@ const Navbar = () => {
                       <div className="text-start text-lg font-bold">
                         Accessibility
                       </div>
-                      <div className="flex w-full items-center justify-center mt-6 gap-3">
+                      <div className="flex w-full items-center justify-center mt-6 gap-2">
                         <Button
                           className={"items-center w-1/3 px-4 py-2"}
                         ></Button>
-                        <Button
+                        <div
                           className={
-                            "items-center w-1/3 px-4 py-2 bg-white border-2 border-violet-400 text-gray-900 dark:text-white dark:bg-black"
+                            "items-center h-9 rounded-md justify-center px-5 bg-white border-2 border-violet-400 text-gray-900 dark:text-white dark:bg-black"
                           }
-                        ></Button>
+                        >
+                          <ModeToggle className="items-end text-center" />
+                        </div>
                         <Button className={"items-center w-1/3 px-4 py-2"}>
                           <Cog />
                         </Button>
@@ -107,8 +109,9 @@ const Navbar = () => {
                       <Button className="mx-1 w-1/2 cursor-pointer text-sm px-4 py-2 rounded-md text-gray-700 bg-white border-2 border-violet-400 dark:text-white dark:bg-black hover:bg-gray-300 transition">
                         Register
                       </Button>
-                      <Button className="mx-1 w-1/2 text-sm px-4 py-2 rounded-md hover:bg-violet-600 transition">
+                      <Button className="flex mx-1 w-1/2 text-sm px-4 py-2 rounded-md hover:bg-violet-600 transition">
                         SignIn
+                        <LogIn size={20} className="justify-around" />
                       </Button>
                     </div>
                   </div>
