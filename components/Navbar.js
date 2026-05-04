@@ -47,6 +47,12 @@ const Navbar = () => {
         >
           Quiz
         </Link>
+        <Link
+          href="/bgames"
+          className="text-lg font-semibold hover:text-violet-500"
+        >
+          Games
+        </Link>
       </div>
 
       {/* Right Side Buttons */}
@@ -55,11 +61,10 @@ const Navbar = () => {
           <LogIn size={20} className="justify-center items-center" />
         </Button>
 
-        <div className="hidden"></div>
         <ModeToggle />
 
+        {/* Mobile Navbar */}
         <div className="md:hidden items-center">
-          {/* Tab and Mobile Navigatiopn Menu */}
           <Sheet>
             <SheetTrigger asChild>
               <button className="border-gray-300 rounded-md hover:bg-gray-100 focus:outline-none focus:ring-gray-600">
@@ -68,6 +73,7 @@ const Navbar = () => {
             </SheetTrigger>
             <SheetContent className={"w-full overflow-hidden"}>
               <SheetHeader>
+                {/* Logo */}
                 <SheetTitle className={"text-2xl font-bold my-3 p-4"}>
                   DiarySpark
                 </SheetTitle>
@@ -84,6 +90,9 @@ const Navbar = () => {
                     </Link>
                     <Link href="/quiz" className="text-lg font-semibold">
                       Quiz
+                    </Link>
+                    <Link href="/bgames" className="text-lg font-semibold">
+                      Games
                     </Link>
                     <div className="h-18 w-full my-10 p-4 justify-center items-center">
                       <div className="text-start text-lg font-bold">
