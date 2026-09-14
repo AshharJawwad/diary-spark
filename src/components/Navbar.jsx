@@ -55,7 +55,7 @@ export default function Navbar() {
         <Show when="signed-out">
           <SignInButton>
             <Link href="/log-in">
-              <Button className="h-10 w-26 text-center text-lg rounded-full font-semibold cursor-pointer">
+              <Button className="h-8 w-23 text-center text-lg rounded-lg font-semibold cursor-pointer">
                 Login
               </Button>
             </Link>
@@ -64,7 +64,7 @@ export default function Navbar() {
             <Link href="/register">
               <Button
                 variant="outline"
-                className="h-10 w-26 text-center text-lg rounded-full font-semibold cursor-pointer"
+                className="h-8 w-23 text-center text-lg rounded-lg font-semibold cursor-pointer"
               >
                 Register
               </Button>
