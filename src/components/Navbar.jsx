@@ -15,13 +15,16 @@ import {
 } from "@/components/ui/sheet";
 import { ModeToggle } from "./ui/ModeToggle";
 import { MobNavMode } from "./ui/MobNavMode";
+import { Show, SignInButton, SignUpButton, UserButton } from "@clerk/nextjs";
 
 export default function Navbar() {
   return (
-    <nav className="flex font-body fixed h-14 w-full z-40 justify-between px-2 bg-white dark:bg-background shadow-sm lg:border-none lg:justify-around items-center sm:px-2 sm:z-40 lg:px-5 lg:z-30 ">
+    <nav className="flex font-body fixed h-16 w-full z-40 justify-between px-2 bg-white dark:bg-background shadow-sm lg:border-none lg:justify-around items-center sm:px-2 sm:z-40 lg:px-5 lg:z-30 ">
       {/* Logo Area */}
       <div className="text-center lg:p-2 lg:rounded-full lg:w-44">
-        <h2 className="text-2xl font-display font-extrabold">DiarySpark</h2>
+        <h2 className="flex text-4xl font-display font-extrabold text-primary">
+          Diary<span className="text-amber-400">S</span>park
+        </h2>
       </div>
 
       {/* Navigation Area */}
@@ -46,9 +49,28 @@ export default function Navbar() {
         <ModeToggle className="md:hidden" />
 
         {/* Login/register Button */}
-        <Button className="h-8 text-lg cursor-pointer rounded-full py-1 px-3">
-          Login
-        </Button>
+        <Show when="signed-in">
+          <UserButton />
+        </Show>
+        <Show when="signed-out">
+          <SignInButton>
+            <Link href="/log-in">
+              <Button className="h-10 w-26 text-center text-lg rounded-full font-semibold cursor-pointer">
+                Login
+              </Button>
+            </Link>
+          </SignInButton>
+          <SignUpButton>
+            <Link href="/register">
+              <Button
+                variant="outline"
+                className="h-10 w-26 text-center text-lg rounded-full font-semibold cursor-pointer"
+              >
+                Register
+              </Button>
+            </Link>
+          </SignUpButton>
+        </Show>
 
         {/* Mobile Navigation */}
         <div className="items-center lg:hidden">
@@ -118,15 +140,24 @@ export default function Navbar() {
               </SheetHeader>
               <SheetFooter className="font-body">
                 <div className="flex flex-col gap-y-3">
-                  <Button className="w-full h-10 text-lg font-semibold rounded-full">
-                    Login
-                  </Button>
-                  <Button
-                    variant="outline"
-                    className="w-full h-10 text-lg font-semibold rounded-full"
-                  >
-                    Register
-                  </Button>
+                  <Show when="signed-in">
+                    <UserButton />
+                  </Show>
+                  <Show when="signed-out">
+                    <SignInButton>
+                      <Button className="h-10 w-full text-center text-lg rounded-full font-semibold cursor-pointer">
+                        Login
+                      </Button>
+                    </SignInButton>
+                    <SignUpButton>
+                      <Button
+                        variant="outline"
+                        className="h-10 w-full text-center text-lg rounded-full font-semibold cursor-pointer"
+                      >
+                        Register
+                      </Button>
+                    </SignUpButton>
+                  </Show>
                 </div>
               </SheetFooter>
             </SheetContent>

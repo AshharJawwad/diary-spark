@@ -4,6 +4,8 @@ import Navbar from "@/components/Navbar";
 import { icons } from "lucide-react";
 import { ThemeProvider } from "@/components/ThemePtovider";
 import { ActionBar } from "@/components/ActionBar";
+import { ClerkProvider } from "@clerk/nextjs";
+import { shadcn } from "@clerk/themes";
 
 const roboto = Roboto({
   weight: ["400", "500", "700"],
@@ -36,23 +38,25 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html
-      lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} ${roboto.variable} ${inter.variable} h-full antialiased`}
-      suppressHydrationWarning
-    >
-      <body className="min-h-full flex flex-col">
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
-          <Navbar />
-          <ActionBar />
-          <main className="relative grow">{children}</main>
-        </ThemeProvider>
-      </body>
-    </html>
+    <ClerkProvider appearance={{ baseTheme: shadcn }}>
+      <html
+        lang="en"
+        className={`${geistSans.variable} ${geistMono.variable} ${roboto.variable} ${inter.variable} h-full antialiased`}
+        suppressHydrationWarning
+      >
+        <body className="min-h-full flex flex-col">
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+            <Navbar />
+            <ActionBar />
+            <main className="relative grow">{children}</main>
+          </ThemeProvider>
+        </body>
+      </html>
+    </ClerkProvider>
   );
 }
