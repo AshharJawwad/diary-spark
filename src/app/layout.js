@@ -1,15 +1,20 @@
-import { Geist, Geist_Mono } from "next/font/google";
+import { Inter, Roboto } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
+import { ThemeProvider } from "@/components/ThemeProvider";
+import ActionBar from "@/components/ActionBar";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const inter = Inter({
   subsets: ["latin"],
+  display: "swap",
+  variable: "--font-inter",
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const roboto = Roboto({
+  weight: ["400", "700"],
   subsets: ["latin"],
+  display: "swap",
+  variable: "--font-roboto",
 });
 
 export const metadata = {
@@ -21,11 +26,20 @@ export default function RootLayout({ children }) {
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      className={`${inter.variable} ${roboto.variable} h-full antialiased`}
+      suppressHydrationWarning
     >
-      <body className="min-h-full flex flex-col">
-        <Navbar />
-        {children}
+      <body className="min-h-full flex flex-col font-body">
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <Navbar />
+          <ActionBar />
+          {children}
+        </ThemeProvider>
       </body>
     </html>
   );
