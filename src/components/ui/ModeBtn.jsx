@@ -124,7 +124,7 @@ export const ModeToggle = React.forwardRef(function ModeToggle(
       aria-label={`Current theme: ${currentConfig.label}. Press to switch to ${nextConfig.label} theme.`}
       aria-pressed={currentTheme !== "system"}
       className={cn(
-        "relative overflow-hidden transition-colors focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
+        "relative overflow-hidden transition-colors focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 cursor-pointer",
         className,
       )}
       {...props}
