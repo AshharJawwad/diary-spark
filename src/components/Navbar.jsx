@@ -22,7 +22,7 @@ export default function Navbar() {
 
   return (
     <nav className="fixed w-full h-36 md:h-16 items-center z-20">
-      <div className="relative flex items-center justify-between lg:justify-around pt-3 pl-3 pb-3 bg-amber-500 border-b border-b-gray-300">
+      <div className="relative flex items-center justify-between lg:justify-around pt-3 pl-3 pb-3 bg-background border-b border-b-gray-400">
         <h3 className="font-extrabold text-2xl lg:text-4xl text-primary font-display">
           DiarySpark
         </h3>
@@ -31,35 +31,35 @@ export default function Navbar() {
           <Link
             href="/"
             onClick={() => setActive("Home")}
-            className={`${active === "Home" ? "text-primary" : "text-gray-700"}`}
+            className={`${active === "Home" ? "text-primary" : "text-gray-700 dark:text-gray-200"}`}
           >
             Home
           </Link>
           <Link
             href="/blog"
             onClick={() => setActive("Blog")}
-            className={`${active === "Blog" ? "text-primary" : "text-gray-700"}`}
+            className={`${active === "Blog" ? "text-primary" : "text-gray-700 dark:text-gray-200"}`}
           >
             Blog
           </Link>
           <Link
             href="/trivia"
             onClick={() => setActive("Trivia")}
-            className={`${active === "Trivia" ? "text-primary" : "text-gray-700"}`}
+            className={`${active === "Trivia" ? "text-primary" : "text-gray-700 dark:text-gray-200"}`}
           >
             Trivia
           </Link>
           <Link
             href="/quest"
             onClick={() => setActive("Quest")}
-            className={`${active === "Quest" ? "text-primary" : "text-gray-700"}`}
+            className={`${active === "Quest" ? "text-primary" : "text-gray-700 dark:text-gray-200"}`}
           >
             Quest
           </Link>
           <Link
             href="/games"
             onClick={() => setActive("Games")}
-            className={`${active === "Games" ? "text-primary" : "text-gray-700"}`}
+            className={`${active === "Games" ? "text-primary" : "text-gray-700 dark:text-gray-200"}`}
           >
             Games
           </Link>
@@ -91,7 +91,7 @@ export default function Navbar() {
                     DiarySpark
                   </SheetTitle>
                   <SheetDescription></SheetDescription>
-                  <div className="flex flex-col items-center text-lg gap-8 font-medium mt-28">
+                  <div className="flex flex-col items-center text-lg gap-8 font-medium mt-12">
                     <Link href="/">Home</Link>
                     <Link href="/blog">Blog</Link>
                     <Link href="/trivia">Trivia</Link>
