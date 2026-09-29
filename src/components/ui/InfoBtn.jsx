@@ -128,16 +128,16 @@ export const InfoBtn = React.forwardRef(function InfoBtn(
 
             <div className="flex flex-col w-full h-full md:h-130 border rounded-lg">
               {/* Tebs */}
-              <div className="flex w-full h-12 items-start rounded-t-lg border-b px-4 pt-2.5 gap-x-4">
+              <div className="flex w-full h-10 items-start rounded-t-lg border-b px-4 pt-1.5 gap-x-4">
                 <button
                   onClick={() => setActive("Feedback")}
-                  className={`text-lg bottom-0 px-4 py-1 cursor-pointer ${active === "Feedback" ? "border-b-2 border-primary text-primary" : "text-gray-600"}`}
+                  className={`text-md font-body font-normal bottom-0 px-4 py-1 cursor-pointer ${active === "Feedback" ? "border-b-2 border-primary text-primary" : "text-gray-600"}`}
                 >
                   Feedback
                 </button>
                 <button
                   onClick={() => setActive("Updates")}
-                  className={`text-lg bottom-0 px-4 py-1 cursor-pointer ${active === "Updates" ? "border-b-2 border-primary text-primary" : "text-gray-600"}`}
+                  className={`text-md font-body font-normal bottom-0 px-4 py-1 cursor-pointer ${active === "Updates" ? "border-b-2 border-primary text-primary" : "text-gray-600"}`}
                 >
                   Updates
                 </button>
@@ -146,7 +146,7 @@ export const InfoBtn = React.forwardRef(function InfoBtn(
               <div>
                 {/* Feedback Area */}
                 {active === "Feedback" && (
-                  <div className="dark:bg-muted-foreground p-3 w-full h-full md:h-117.5 rounded-b-lg overflow-hidden overflow-y-scroll no-scrollbar">
+                  <div className="dark:bg-muted-foreground p-3 w-full h-full md:h-119.5 rounded-b-lg overflow-hidden overflow-y-scroll no-scrollbar">
                     <h3 className="text-2xl font-display font-semibold">
                       Feedback
                     </h3>
@@ -205,7 +205,7 @@ export const InfoBtn = React.forwardRef(function InfoBtn(
                             <span className="text-rose-500">*</span>
                           </label>
                           <span
-                            className={`text-xs ${formData.message.length > 450 ? "text-rose-500 font-medium" : "text-slate-200"}`}
+                            className={`text-xs ${formData.message.length > 450 ? "text-rose-500 font-medium" : "text-slate-800 dark:text-slate-200"}`}
                           >
                             {formData.message.length}/500
                           </span>
@@ -228,7 +228,7 @@ export const InfoBtn = React.forwardRef(function InfoBtn(
                       <Button
                         type="submit"
                         disabled={submitting}
-                        className="w-44 mt-2 py-3 disabled:bg-primary/20 font-semibold font-body rounded-lg shadow-sm dark:shadow-primary-foreground/40 hover:shadow-lg hover:shadow-primary-foreground active:scale[0.99] transition duration-150 text-sm flex items-center justify-center space-x-2"
+                        className="w-44 mt-2 py-3 disabled:bg-primary/20 font-semibold font-body rounded-lg active:scale[0.99] transition duration-150 text-sm flex items-center justify-center space-x-2 cursor-pointer"
                       >
                         {submitting ? (
                           <>
@@ -246,7 +246,7 @@ export const InfoBtn = React.forwardRef(function InfoBtn(
 
                 {/* New Updates Area */}
                 {active === "Updates" && (
-                  <div className="bg-muted-foreground p-3 w-full h-full md:h-117.5"></div>
+                  <div className="dark:bg-muted-foreground p-3 w-full h-full md:min-h-119.5 overflow-hidden overflow-y-scroll no-scrollbar"></div>
                 )}
               </div>
             </div>

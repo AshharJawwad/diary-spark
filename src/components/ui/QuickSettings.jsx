@@ -10,7 +10,9 @@ export const QuickSettings = React.forwardRef(function QuickSettings(
   { className, variant = "outline", size = "icon", onClick, ...props },
   ref,
 ) {
+  // Open Quick Settings Modal & Active Tabs
   const [modalOpen, setModalOpen] = useState(false);
+  const [active, setActive] = useState("General");
 
   const OpenSettings = () => setModalOpen(true);
   const closeSettings = () => setModalOpen(false);
@@ -43,7 +45,7 @@ export const QuickSettings = React.forwardRef(function QuickSettings(
         >
           {/* Popup Modal for Quick Settings */}
           <div
-            className="w-full h-full md:w-250 md:h-150 bg-background p-3 md:rounded-lg text-gray-800 dark:text-white"
+            className="w-full h-full md:w-250 md:h-150 bg-background px-3 py-2 md:rounded-lg text-gray-800 dark:text-white"
             onClick={(e) => e.stopPropagation()}
           >
             <div className="flex justify-between pb-2">
@@ -56,22 +58,33 @@ export const QuickSettings = React.forwardRef(function QuickSettings(
                 onClick={closeSettings}
                 className="border-none text-lg cursor-pointer"
               >
-                <X className="w-[1.2rem] h-[1.2rem]"/>
+                <X className="w-[1.2rem] h-[1.2rem]" />
               </button>
             </div>
 
             {/* Settings Area */}
-            <div className="flex flex-col w-full h-full md:h-118 border rounded-lg"></div>
-
-            {/* Settings Save Button */}
-            <div className="flex w-full h-15 items-center justify-end">
-              <Button
-                disabled
-                variant="secondary"
-                className="w-15 h-9 text-lg font-semibold font-body cursor-pointer"
-              >
-                Save
-              </Button>
+            <div className="flex flex-col w-full h-full md:h-134 border rounded-lg">
+              {/* Quick Settings Tabs */}
+              <div className="flex w-full h-10 items-start rounded-t-lg border-b px-4 pt-1.5 gap-x-4">
+                <button
+                  onClick={() => setActive("General")}
+                  className={`text-md font-body font-normal bottom-0 px-4 py-1 cursor-pointer ${active === "General" ? "border-b-2 border-primary text-primary" : "text-gray-600"}`}
+                >
+                  General
+                </button>
+                <button
+                  onClick={() => setActive("Intelligence")}
+                  className={`text-md font-body font-normal bottom-0 px-4 py-1 cursor-pointer ${active === "Intelligence" ? "border-b-2 border-primary text-primary" : "text-gray-600"}`}
+                >
+                  Intelligence
+                </button>
+                <button
+                  onClick={() => setActive("Notifications")}
+                  className={`text-md font-body font-normal bottom-0 px-4 py-1 cursor-pointer ${active === "Notifications" ? "border-b-2 border-primary text-primary" : "text-gray-600"}`}
+                >
+                  Notifications
+                </button>
+              </div>
             </div>
           </div>
         </div>
