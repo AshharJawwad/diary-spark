@@ -6,14 +6,8 @@ import { Button } from "./button";
 import { cn } from "@/lib/utils";
 import { Settings, X } from "lucide-react";
 
-export default function QuickSettings(
-  {
-    className,
-    variant = "outline",
-    size = "icon",
-    onClick,
-    ...props
-  },
+export const QuickSettings = React.forwardRef(function QuickSettings(
+  { className, variant = "outline", size = "icon", onClick, ...props },
   ref,
 ) {
   const [modalOpen, setModalOpen] = useState(false);
@@ -21,7 +15,7 @@ export default function QuickSettings(
   const OpenSettings = () => setModalOpen(true);
   const closeSettings = () => setModalOpen(false);
   return (
-    <div className="">
+    <div>
       <Button
         ref={ref}
         variant={variant}
@@ -49,27 +43,32 @@ export default function QuickSettings(
         >
           {/* Popup Modal for Quick Settings */}
           <div
-            className="w-250 h-150 bg-white dark:bg-background p-5 rounded-lg text-gray-800 dark:text-white"
+            className="w-full h-full md:w-250 md:h-150 bg-background p-3 md:rounded-lg text-gray-800 dark:text-white"
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="flex justify-between pb-2 border-b">
+            <div className="flex justify-between pb-2">
               <h1 className="text-3xl font-extrabold font-display">
                 Quick Settings
               </h1>
+
+              {/* Popup Close */}
               <button
                 onClick={closeSettings}
                 className="border-none text-lg cursor-pointer"
               >
-                <X />
+                <X className="w-[1.2rem] h-[1.2rem]"/>
               </button>
             </div>
-            <div className="flex flex-col w-full h-118 border-b"></div>
+
+            {/* Settings Area */}
+            <div className="flex flex-col w-full h-full md:h-118 border rounded-lg"></div>
 
             {/* Settings Save Button */}
             <div className="flex w-full h-15 items-center justify-end">
               <Button
-                variant="outline"
-                className="w-15 h-9 text-lg font-semibold font-body"
+                disabled
+                variant="secondary"
+                className="w-15 h-9 text-lg font-semibold font-body cursor-pointer"
               >
                 Save
               </Button>
@@ -79,4 +78,4 @@ export default function QuickSettings(
       )}
     </div>
   );
-}
+});

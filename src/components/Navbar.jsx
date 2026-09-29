@@ -15,7 +15,7 @@ import {
 } from "@/components/ui/sheet";
 import { Menu } from "lucide-react";
 import { ModeToggle } from "./ui/ModeBtn";
-import QuickSettings from "./ui/QuickSettings";
+import { QuickSettings } from "./ui/QuickSettings";
 
 export default function Navbar() {
   const [active, setActive] = useState("Home");
@@ -77,7 +77,7 @@ export default function Navbar() {
 
           {/* Mobile Navigation Side Bar */}
           <div className="flex lg:hidden">
-            <Sheet className="w-full md:max-w-sm">
+            <Sheet>
               <SheetTrigger
                 render={
                   <Button variant="outline" className="cursor-pointer">
@@ -91,15 +91,15 @@ export default function Navbar() {
                     DiarySpark
                   </SheetTitle>
                   <SheetDescription></SheetDescription>
-                  <div className="flex flex-col items-center text-lg gap-8 font-medium mt-12">
+                  <div className="flex flex-col items-center text-lg md:text-2xl lg:text-lg gap-5 font-body font-semibold mt-12">
                     <Link href="/">Home</Link>
                     <Link href="/blog">Blog</Link>
                     <Link href="/trivia">Trivia</Link>
                     <Link href="/quest">Quest</Link>
                     <Link href="/games">Games</Link>
                   </div>
-                  <div className="flex flex-col w-full">
-                    <h2 className="text-2xl font-display font-semibold mt-15 w-full">
+                  <div className="flex flex-col w-full mt-32 md:mt-72">
+                    <h2 className="text-2xl font-display font-semibold w-full">
                       Accessibility
                     </h2>
                     <div className="w-full">
@@ -107,19 +107,22 @@ export default function Navbar() {
                       <div className="flex flex-row mt-5 space-x-3">
                         <ModeToggle className="w-1/3" />
 
+                        {/* Quick Settings Button */}
                         <div className="w-1/3">
                           <QuickSettings className="w-full" />
                         </div>
                       </div>
-
-                      {/* Quick Settings Button */}
-                      <div className="mt-5 space-x-3"></div>
                     </div>
                   </div>
                 </SheetHeader>
                 <SheetFooter>
-                  <Button className="w-full">Login</Button>
-                  <Button variant="outline" className="w-full">
+                  <Button className="w-full text-lg font-semibold font-body">
+                    Login
+                  </Button>
+                  <Button
+                    variant="outline"
+                    className="w-full text-lg font-semibold font-body"
+                  >
                     Register
                   </Button>
                 </SheetFooter>
