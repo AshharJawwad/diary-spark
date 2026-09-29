@@ -143,6 +143,7 @@ export const InfoBtn = React.forwardRef(function InfoBtn(
                 </button>
               </div>
 
+              {/* Feedback & Updates Tab Pages */}
               <div>
                 {/* Feedback Area */}
                 {active === "Feedback" && (

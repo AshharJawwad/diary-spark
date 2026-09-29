@@ -79,11 +79,62 @@ export const QuickSettings = React.forwardRef(function QuickSettings(
                   Intelligence
                 </button>
                 <button
-                  onClick={() => setActive("Notifications")}
-                  className={`text-md font-body font-normal bottom-0 px-4 py-1 cursor-pointer ${active === "Notifications" ? "border-b-2 border-primary text-primary" : "text-gray-600"}`}
+                  onClick={() => setActive("Notification")}
+                  className={`text-md font-body font-normal bottom-0 px-4 py-1 cursor-pointer ${active === "Notification" ? "border-b-2 border-primary text-primary" : "text-gray-600"}`}
                 >
-                  Notifications
+                  Notification
                 </button>
+              </div>
+
+              {/* Quick Settings Tab Pages */}
+              <div>
+                {/* General Settings */}
+                {active === "General" && (
+                  <div className="dark:bg-muted-foreground p-3 w-full h-full md:min-h-123.5 rounded-b-lg overflow-hidden overflow-y-scroll no-scrollbar">
+                    <div className="flex items-center justify-between px-1">
+                      <div className="flex flex-col space-y-1.5">
+                        <h3 className="text-xl font-bold font-display">
+                          Font Size
+                        </h3>
+                        <p className="text-sm font-normal font-body">
+                          Something
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                {/* Intelligence Settings */}
+                {active === "Intelligence" && (
+                  <div className="dark:bg-muted-foreground p-3 w-full h-full md:min-h-123.5 rounded-b-lg overflow-hidden overflow-y-scroll no-scrollbar">
+                    <div className="flex items-center justify-between px-1">
+                      <div className="flex flex-col space-y-1.5">
+                        <h3 className="text-xl font-bold font-display">
+                          Font Size
+                        </h3>
+                        <p className="text-sm font-normal font-body">
+                          Something
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                {/* Notification Settings */}
+                {active === "Notification" && (
+                  <div className="dark:bg-muted-foreground p-3 w-full h-full md:min-h-123.5 rounded-b-lg overflow-hidden overflow-y-scroll no-scrollbar">
+                    <div className="flex items-center justify-between px-1">
+                      <div className="flex flex-col space-y-1.5">
+                        <h3 className="text-xl font-bold font-display">
+                          Font Size
+                        </h3>
+                        <p className="text-sm font-normal font-body">
+                          Something
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                )}
               </div>
             </div>
           </div>
