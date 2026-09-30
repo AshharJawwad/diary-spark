@@ -7,7 +7,7 @@ import { cn } from "@/lib/utils";
 import { Settings, X } from "lucide-react";
 
 export const QuickSettings = React.forwardRef(function QuickSettings(
-  { className, variant = "outline", size = "icon", onClick, ...props },
+  { className, variant, size = "icon", onClick, ...props },
   ref,
 ) {
   // Open Quick Settings Modal & Active Tabs
@@ -15,7 +15,9 @@ export const QuickSettings = React.forwardRef(function QuickSettings(
   const [active, setActive] = useState("General");
 
   const OpenSettings = () => setModalOpen(true);
+
   const closeSettings = () => setModalOpen(false);
+
   return (
     <div>
       <Button
@@ -33,14 +35,14 @@ export const QuickSettings = React.forwardRef(function QuickSettings(
         <Settings
           aria-hidden="true"
           className={cn(
-            "h-[1.2rem] w-[1.2rem] transition-all duration-300 ease-in-out text-gray-500",
+            "h-[1.2rem] w-[1.2rem] transition-all duration-300 ease-in-out",
           )}
         />
       </Button>
 
       {modalOpen && (
         <div
-          className="fixed flex inset-0 bg-black/70 backdrop-blur-xs items-center justify-center"
+          className="fixed flex inset-0 bg-black/70 backdrop-blur-xs items-center justify-center z-20"
           onClick={closeSettings}
         >
           {/* Popup Modal for Quick Settings */}
@@ -56,16 +58,16 @@ export const QuickSettings = React.forwardRef(function QuickSettings(
               {/* Popup Close */}
               <button
                 onClick={closeSettings}
-                className="border-none text-lg cursor-pointer"
+                className="border-none text-lg cursor-pointer z-30"
               >
                 <X className="w-[1.2rem] h-[1.2rem]" />
               </button>
             </div>
 
             {/* Settings Area */}
-            <div className="flex flex-col w-full h-full md:h-134 border rounded-lg">
+            <div className="flex flex-col w-full h-195 md:h-134 border rounded-lg">
               {/* Quick Settings Tabs */}
-              <div className="flex w-full h-10 items-start rounded-t-lg border-b px-4 pt-1.5 gap-x-4">
+              <div className="flex w-full h-9 md:h-10 items-start rounded-t-lg border-b px-4 pt-1.5 gap-x-4">
                 <button
                   onClick={() => setActive("General")}
                   className={`text-md font-body font-normal bottom-0 px-4 py-1 cursor-pointer ${active === "General" ? "border-b-2 border-primary text-primary" : "text-gray-600"}`}
@@ -90,7 +92,7 @@ export const QuickSettings = React.forwardRef(function QuickSettings(
               <div>
                 {/* General Settings */}
                 {active === "General" && (
-                  <div className="dark:bg-muted-foreground p-3 w-full h-full md:min-h-123.5 rounded-b-lg overflow-hidden overflow-y-scroll no-scrollbar">
+                  <div className="dark:bg-muted-foreground p-3 w-full min-h-185.5 md:min-h-123.5 rounded-b-lg overflow-hidden overflow-y-scroll no-scrollbar">
                     <div className="flex items-center justify-between px-1">
                       <div className="flex flex-col space-y-1.5">
                         <h3 className="text-xl font-bold font-display">
@@ -106,7 +108,7 @@ export const QuickSettings = React.forwardRef(function QuickSettings(
 
                 {/* Intelligence Settings */}
                 {active === "Intelligence" && (
-                  <div className="dark:bg-muted-foreground p-3 w-full h-full md:min-h-123.5 rounded-b-lg overflow-hidden overflow-y-scroll no-scrollbar">
+                  <div className="dark:bg-muted-foreground p-3 w-full min-h-185.5 md:min-h-123.5 rounded-b-lg overflow-hidden overflow-y-scroll no-scrollbar">
                     <div className="flex items-center justify-between px-1">
                       <div className="flex flex-col space-y-1.5">
                         <h3 className="text-xl font-bold font-display">
@@ -122,7 +124,7 @@ export const QuickSettings = React.forwardRef(function QuickSettings(
 
                 {/* Notification Settings */}
                 {active === "Notification" && (
-                  <div className="dark:bg-muted-foreground p-3 w-full h-full md:min-h-123.5 rounded-b-lg overflow-hidden overflow-y-scroll no-scrollbar">
+                  <div className="dark:bg-muted-foreground p-3 w-full min-h-185.5 md:min-h-123.5 rounded-b-lg overflow-hidden overflow-y-scroll no-scrollbar">
                     <div className="flex items-center justify-between px-1">
                       <div className="flex flex-col space-y-1.5">
                         <h3 className="text-xl font-bold font-display">

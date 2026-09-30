@@ -16,16 +16,20 @@ import {
 import { Menu } from "lucide-react";
 import { ModeToggle } from "./ui/ModeBtn";
 import { QuickSettings } from "./ui/QuickSettings";
+import { InfoBtn } from "./ui/InfoBtn";
 
 export default function Navbar() {
+  // Active Tabs
   const [active, setActive] = useState("Home");
+
+  // Closing Sheet Component When Popup Modal Opens
 
   return (
     <nav className="fixed w-full h-36 md:h-16 items-center z-20">
-      <div className="relative flex items-center justify-between lg:justify-around pt-3 pl-3 pb-3 bg-background border-b border-b-gray-400">
-        <h3 className="font-extrabold text-2xl lg:text-4xl text-primary font-display">
+      <div className="relative flex items-center justify-between lg:justify-around pt-3 pl-3 pb-3 bg-background border-b border-b-gray-200 dark:border-b-gray-800">
+        <h1 className="font-extrabold text-3xl md:text-4xl lg:text-4xl text-primary font-display">
           DiarySpark
-        </h3>
+        </h1>
 
         <ul className="hidden lg:flex items-center text-lg gap-8 font-semibold">
           <Link
@@ -87,29 +91,78 @@ export default function Navbar() {
               />
               <SheetContent>
                 <SheetHeader>
-                  <SheetTitle className="text-4xl font-display font-extrabold text-primary">
+                  <SheetTitle className="text-3xl md:text-4xl font-display font-extrabold text-primary">
                     DiarySpark
                   </SheetTitle>
                   <SheetDescription></SheetDescription>
-                  <div className="flex flex-col items-center text-lg md:text-2xl lg:text-lg gap-5 font-body font-semibold mt-12">
-                    <Link href="/">Home</Link>
-                    <Link href="/blog">Blog</Link>
-                    <Link href="/trivia">Trivia</Link>
-                    <Link href="/quest">Quest</Link>
-                    <Link href="/games">Games</Link>
+                  {/* Page Tabs */}
+                  <div className="flex flex-col items-center text-xl md:text-2xl lg:text-lg gap-5 font-body font-semibold mt-12 border-b pb-8 pt-3 overflow-hidden overflow-y-scroll no-scrollbar">
+                    <Link
+                      onClick={() => setActive("Home")}
+                      href="/"
+                      className={`w-96 text-center py-2 rounded-lg ${active === "Home" ? "text-primary bg-primary-foreground dark:bg-muted focus:ring focus:ring-violet-300" : "text-gray-700 dark:text-gray-200"}`}
+                    >
+                      Home
+                    </Link>
+                    <Link
+                      onClick={() => setActive("Blog")}
+                      href="/blog"
+                      className={`w-96 text-center py-2 rounded-lg ${active === "Blog" ? "text-primary bg-primary-foreground dark:bg-muted focus:ring focus:ring-violet-300" : "text-gray-700 dark:text-gray-200"}`}
+                    >
+                      Blog
+                    </Link>
+                    <Link
+                      onClick={() => setActive("Trivia")}
+                      href="/trivia"
+                      className={`w-96 text-center py-2 rounded-lg ${active === "Trivia" ? "text-primary bg-primary-foreground dark:bg-muted focus:ring focus:ring-violet-300" : "text-gray-700 dark:text-gray-200"}`}
+                    >
+                      Trivia
+                    </Link>
+                    <Link
+                      onClick={() => setActive("Quest")}
+                      href="/quest"
+                      className={`w-96 text-center py-2 rounded-lg ${active === "Quest" ? "text-primary bg-primary-foreground dark:bg-muted focus:ring focus:ring-violet-300" : "text-gray-700 dark:text-gray-200"}`}
+                    >
+                      Quest
+                    </Link>
+                    <Link
+                      onClick={() => setActive("Games")}
+                      href="/games"
+                      className={`w-96 text-center py-2 rounded-lg ${active === "Games" ? "text-primary bg-primary-foreground dark:bg-muted focus:ring focus:ring-violet-300" : "text-gray-700 dark:text-gray-200"}`}
+                    >
+                      Games
+                    </Link>
                   </div>
-                  <div className="flex flex-col w-full mt-32 md:mt-72">
+                  <div className="flex flex-col w-full mt-12 md:mt-72">
                     <h2 className="text-2xl font-display font-semibold w-full">
                       Accessibility
                     </h2>
                     <div className="w-full">
                       {/* Mode Toggle Button */}
-                      <div className="flex flex-row mt-5 space-x-3">
-                        <ModeToggle className="w-1/3" />
+                      <div className="flex flex-row items-center mt-5 gap-2">
+                        <ModeToggle className="w-1/3 h-9" />
 
                         {/* Quick Settings Button */}
                         <div className="w-1/3">
-                          <QuickSettings className="w-full" />
+                          <QuickSettings className="w-full h-9" />
+                        </div>
+
+                        {/* Feadback & Updates Button */}
+                        <div className="w-1/3">
+                          <InfoBtn className="w-full h-9" />
+                        </div>
+                      </div>
+                      <div className="flex flex-row items-center mt-5 gap-2">
+                        <ModeToggle className="w-1/3 h-9" />
+
+                        {/* Quick Settings Button */}
+                        <div className="w-1/3">
+                          <QuickSettings className="w-full h-9" />
+                        </div>
+
+                        {/* Feadback & Updates Button */}
+                        <div className="w-1/3">
+                          <InfoBtn className="w-full h-9" />
                         </div>
                       </div>
                     </div>

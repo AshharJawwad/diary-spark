@@ -26,6 +26,7 @@ export const InfoBtn = React.forwardRef(function InfoBtn(
   const [submitted, setSubmitted] = useState(false);
 
   const openFeedbackNew = () => setModalOpen(true);
+
   const closeFeedbackNew = () => setModalOpen(false);
 
   //   Handle Input Change
@@ -43,7 +44,20 @@ export const InfoBtn = React.forwardRef(function InfoBtn(
     await new Promise((resolve) => setTimeout(resolve, 1500));
 
     // Log the Data
-    console.log("Submitted Feedback Data", formData);
+    try {
+      const response = await fetch("", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
+
+      if (!response) throw new Error("Something went wrong. Please try again.");
+
+      setSubmitted({ submitted: true, loading: false, error: null });
+      setFormData({ name: "", email: "", message: "" });
+    } catch (err) {
+      setSubmitted({ submitted: false, loading: false, error: err.message });
+    }
 
     setSubmitting(false);
     setSubmitted(true);
@@ -56,10 +70,21 @@ export const InfoBtn = React.forwardRef(function InfoBtn(
     });
   };
 
+  const closeSubmitted = () => {
+    closeFeedbackNew();
+    setSubmitted(false);
+  };
+
   if (submitted) {
     return (
-      <div className="fixed flex flex-col inset-0 bg-black/70 backdrop-blur-xs items-center justify-center z-20">
-        <div className="w-full h-full md:w-250 md:h-150 items-center justify-center text-center space-y-8 bg-muted-foreground px-5 py-6 rounded-lg">
+      <div
+        onClick={closeSubmitted}
+        className="fixed flex flex-col inset-0 bg-black/30 backdrop-blur-xs items-center justify-center z-10"
+      >
+        <div
+          onClick={(e) => e.stopPropagation()}
+          className="flex flex-col w-full h-full md:w-250 md:h-150 items-center justify-center text-center space-y-8 bg-background dark:bg-muted-foreground px-5 py-6 rounded-lg"
+        >
           <div className="flex items-center w-40 h-40 rounded-full bg-emerald-100 text-emerald-500 mb2">
             <FaceGrinning className="w-44 h-44" />
           </div>
@@ -70,12 +95,21 @@ export const InfoBtn = React.forwardRef(function InfoBtn(
             Your feedback has beensuccessfully submitted. We appreciate your
             insights to make DiarySpark better
           </p>
-          <button
-            onClick={() => setSubmitted(false)}
-            className="mt-4 px-6 py-2.5 bg-slate-800 hover:bg-slate-900 text-white font-medium rounded-lg transition duration-200 text-sm shadow-sm"
-          >
-            Send Another Response
-          </button>
+
+          <div className="flex items-center justify-center gap-3">
+            <button
+              onClick={() => setSubmitted(false)}
+              className="mt-4 px-6 py-2.5 bg-slate-800 hover:bg-slate-900 text-white font-medium rounded-lg transition duration-200 text-sm shadow-sm cursor-pointer"
+            >
+              Send Another Response
+            </button>
+            <button
+              onClick={closeSubmitted}
+              className="mt-4 px-6 py-2.5 bg-slate-800 hover:bg-slate-900 text-white font-medium rounded-lg transition duration-200 text-sm shadow-sm cursor-pointer"
+            >
+              Close
+            </button>
+          </div>
         </div>
       </div>
     );
@@ -105,7 +139,7 @@ export const InfoBtn = React.forwardRef(function InfoBtn(
       {modalOpen && (
         <div
           onClick={closeFeedbackNew}
-          className="fixed flex inset-0 bg-black/70 backdrop-blur-xs items-center justify-center z-20"
+          className="fixed flex inset-0 bg-black/30 backdrop-blur-xs items-center justify-center z-20"
         >
           {/* Popup Modal for Feedback Form & New Updates Section */}
           <div
@@ -126,9 +160,9 @@ export const InfoBtn = React.forwardRef(function InfoBtn(
               </button>
             </div>
 
-            <div className="flex flex-col w-full h-full md:h-130 border rounded-lg">
+            <div className="flex flex-col w-full h-195 md:h-134 border rounded-lg">
               {/* Tebs */}
-              <div className="flex w-full h-10 items-start rounded-t-lg border-b px-4 pt-1.5 gap-x-4">
+              <div className="flex w-full h-9 md:h-10 items-start rounded-t-lg border-b px-4 pt-1.5 gap-x-4">
                 <button
                   onClick={() => setActive("Feedback")}
                   className={`text-md font-body font-normal bottom-0 px-4 py-1 cursor-pointer ${active === "Feedback" ? "border-b-2 border-primary text-primary" : "text-gray-600"}`}
@@ -147,7 +181,7 @@ export const InfoBtn = React.forwardRef(function InfoBtn(
               <div>
                 {/* Feedback Area */}
                 {active === "Feedback" && (
-                  <div className="dark:bg-muted-foreground p-3 w-full h-full md:h-119.5 rounded-b-lg overflow-hidden overflow-y-scroll no-scrollbar">
+                  <div className="dark:bg-muted-foreground p-3 w-full min-h-185.5 md:h-119.5 rounded-b-lg overflow-hidden overflow-y-scroll no-scrollbar">
                     <h3 className="text-2xl font-display font-semibold">
                       Feedback
                     </h3>
@@ -229,7 +263,7 @@ export const InfoBtn = React.forwardRef(function InfoBtn(
                       <Button
                         type="submit"
                         disabled={submitting}
-                        className="w-44 mt-2 py-3 disabled:bg-primary/20 font-semibold font-body rounded-lg active:scale[0.99] transition duration-150 text-sm flex items-center justify-center space-x-2 cursor-pointer"
+                        className="w-44 mt-2 py-4 disabled:bg-primary/20 font-semibold font-body rounded-lg active:scale[0.99] transition duration-150 text-sm flex items-center justify-center space-x-2 cursor-pointer"
                       >
                         {submitting ? (
                           <>
@@ -247,7 +281,7 @@ export const InfoBtn = React.forwardRef(function InfoBtn(
 
                 {/* New Updates Area */}
                 {active === "Updates" && (
-                  <div className="dark:bg-muted-foreground p-3 w-full h-full md:min-h-119.5 overflow-hidden overflow-y-scroll no-scrollbar"></div>
+                  <div className="dark:bg-muted-foreground p-3 w-full min-h-185.5 md:min-h-119.5 rounded-b-lg overflow-hidden overflow-y-scroll no-scrollbar"></div>
                 )}
               </div>
             </div>
