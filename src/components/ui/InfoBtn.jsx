@@ -7,7 +7,7 @@ import { cn } from "@/lib/utils";
 import { FaceGrinning, Info, LoaderCircle, X } from "lucide-react";
 
 export const InfoBtn = React.forwardRef(function InfoBtn(
-  { className, variant = "outline", size = "icon", onClick, ...props },
+  { className, variant = "outline", size = "icon", feedbackEndpoint = "/api/feedback", onClick, ...props },
   ref,
 ) {
   // Open Modal & Active Tab
@@ -24,6 +24,7 @@ export const InfoBtn = React.forwardRef(function InfoBtn(
   //   UI Status State
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [error, setError] = useState(null);
 
   const openFeedbackNew = () => setModalOpen(true);
 
@@ -38,36 +39,27 @@ export const InfoBtn = React.forwardRef(function InfoBtn(
   //   Handle Form Submission
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (submitting) return;
     setSubmitting(true);
+    setError(null);
 
-    // API Request Timeout
-    await new Promise((resolve) => setTimeout(resolve, 1500));
-
-    // Log the Data
+    // Submit feedback and show confirmation only after a successful response.
     try {
-      const response = await fetch("", {
+      const response = await fetch(feedbackEndpoint, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
       });
 
-      if (!response) throw new Error("Something went wrong. Please try again.");
+      if (!response.ok) throw new Error("Something went wrong. Please try again.");
 
-      setSubmitted({ submitted: true, loading: false, error: null });
+      setSubmitted(true);
       setFormData({ name: "", email: "", message: "" });
     } catch (err) {
-      setSubmitted({ submitted: false, loading: false, error: err.message });
+      setError(err instanceof Error ? err.message : "Something went wrong. Please try again.");
+    } finally {
+      setSubmitting(false);
     }
-
-    setSubmitting(false);
-    setSubmitted(true);
-
-    // Reset Form
-    setFormData({
-      name: "",
-      email: "",
-      message: "",
-    });
   };
 
   const closeSubmitted = () => {
@@ -92,7 +84,7 @@ export const InfoBtn = React.forwardRef(function InfoBtn(
             Thank You!
           </h2>
           <p className="text-slate-600 dark:text-slate-300">
-            Your feedback has beensuccessfully submitted. We appreciate your
+            Your feedback has been successfully submitted. We appreciate your
             insights to make DiarySpark better
           </p>
 
@@ -161,7 +153,7 @@ export const InfoBtn = React.forwardRef(function InfoBtn(
             </div>
 
             <div className="flex flex-col w-full h-195 md:h-134 border rounded-lg">
-              {/* Tebs */}
+              {/* Feedback and Updates tabs */}
               <div className="flex w-full h-9 md:h-10 items-start rounded-t-lg border-b px-4 pt-1.5 gap-x-4">
                 <button
                   onClick={() => setActive("Feedback")}
@@ -260,6 +252,11 @@ export const InfoBtn = React.forwardRef(function InfoBtn(
                       </div>
 
                       {/* Submit Button */}
+                      {error && (
+                        <p role="alert" className="text-sm text-rose-500">
+                          {error}
+                        </p>
+                      )}
                       <Button
                         type="submit"
                         disabled={submitting}
