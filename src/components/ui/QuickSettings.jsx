@@ -79,22 +79,22 @@ export const QuickSettings = React.forwardRef(function QuickSettings(
             {/* Settings Area */}
             <div className="flex flex-col w-full h-195 md:h-134 border rounded-lg">
               {/* Quick Settings Tabs */}
-              <div className="flex w-full h-9 md:h-10 items-start rounded-t-lg border-b px-4 pt-1.5 gap-x-4">
+              <div className="flex w-full h-10 md:h-10 items-start rounded-t-lg border-b px-4 pt-1.5 gap-x-1">
                 <button
                   onClick={() => setActive("General")}
-                  className={`text-md font-body font-normal bottom-0 px-4 py-1 cursor-pointer ${active === "General" ? "border-b-2 border-primary text-primary" : "text-gray-600"}`}
+                  className={`text-lg font-body font-normal bottom-0 px-2 py-0.5 cursor-pointer ${active === "General" ? "border-b-2 border-primary text-primary" : "text-gray-600 hover:text-primary hover:border-b-2 hover:border-primary"}`}
                 >
                   General
                 </button>
                 <button
                   onClick={() => setActive("Intelligence")}
-                  className={`text-md font-body font-normal bottom-0 px-4 py-1 cursor-pointer ${active === "Intelligence" ? "border-b-2 border-primary text-primary" : "text-gray-600"}`}
+                  className={`text-lg font-body font-normal bottom-0 px-2 py-0.5 cursor-pointer ${active === "Intelligence" ? "border-b-2 border-primary text-primary" : "text-gray-600 hover:text-primary hover:border-b-2 hover:border-primary"}`}
                 >
                   Intelligence
                 </button>
                 <button
                   onClick={() => setActive("Notification")}
-                  className={`text-md font-body font-normal bottom-0 px-4 py-1 cursor-pointer ${active === "Notification" ? "border-b-2 border-primary text-primary" : "text-gray-600"}`}
+                  className={`text-lg font-body font-normal bottom-0 px-2 py-0.5 cursor-pointer ${active === "Notification" ? "border-b-2 border-primary text-primary" : "text-gray-600 hover:text-primary hover:border-b-2 hover:border-primary"}`}
                 >
                   Notification
                 </button>
