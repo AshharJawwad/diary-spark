@@ -50,14 +50,14 @@ export default function Home() {
       </div>
 
       {/* Feature Cards */}
-      <div className="w-full  mx-auto p-6">
-        <div className="grid md:grid-cols-2 gap-4">
+      <div className="w-full  mx-auto p-3 pt-8 pb-8 md:pt-12 md:pb-12 md:p-6 border-t border-b mt-5 mb-5">
+        <div className="grid md:grid-cols-2">
           <div className="w-full h-96 md:h-155 justify-center bg-background rounded-lg shadow">
             <div className="flex flex-col h-full items-center justify-center gap-6">
               <span className="text-xs text-center font-body border rounded-sm px-1.5 py-0.5">
                 Blogs
               </span>
-              <h3 className="font-display font-semibold text-center text-4xl text-gray-800 dark:text-gray-200">
+              <h3 className="font-display font-semibold text-center text-3xl md:text-4xl text-gray-800 dark:text-gray-200">
                 For Readers
                 <span className="flex flex-col">Knowledge That Matters</span>
               </h3>
@@ -71,7 +71,7 @@ export default function Home() {
               <span className="text-xs text-center font-body border rounded-sm px-1.5 py-0.5">
                 Trivia
               </span>
-              <h3 className="font-display font-semibold text-center text-4xl text-gray-800 dark:text-gray-200">
+              <h3 className="font-display font-semibold text-center text-3xl md:text-4xl text-gray-800 dark:text-gray-200">
                 For Readers
                 <span className="flex flex-col">Knowledge That Matters</span>
               </h3>
@@ -85,7 +85,7 @@ export default function Home() {
               <span className="text-xs text-center font-body border rounded-sm px-1.5 py-0.5">
                 Blogs
               </span>
-              <h3 className="font-display font-semibold text-center text-4xl text-gray-800 dark:text-gray-200">
+              <h3 className="font-display font-semibold text-center text-3xl md:text-4xl text-gray-800 dark:text-gray-200">
                 For Readers
                 <span className="flex flex-col">Knowledge That Matters</span>
               </h3>
@@ -99,7 +99,7 @@ export default function Home() {
               <span className="text-xs text-center font-body border rounded-sm px-1.5 py-0.5">
                 Blogs
               </span>
-              <h3 className="font-display font-semibold text-center text-4xl text-gray-800 dark:text-gray-200">
+              <h3 className="font-display font-semibold text-center text-3xl md:text-4xl text-gray-800 dark:text-gray-200">
                 For Readers
                 <span className="flex flex-col">Knowledge That Matters</span>
               </h3>

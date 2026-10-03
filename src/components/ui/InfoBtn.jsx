@@ -7,11 +7,16 @@ import { cn } from "@/lib/utils";
 import { FaceGrinning, Info, LoaderCircle, X } from "lucide-react";
 
 export const InfoBtn = React.forwardRef(function InfoBtn(
-  { className, variant = "outline", size = "icon", feedbackEndpoint = "/api/feedback", onClick, ...props },
+  { className, variant = "outline", size = "icon", feedbackEndpoint = "/api/feedback", onClick, open, onOpenChange, hideTrigger = false, ...props },
   ref,
 ) {
   // Open Modal & Active Tab
-  const [modalOpen, setModalOpen] = useState(false);
+  const [internalOpen, setInternalOpen] = useState(false);
+  const modalOpen = open ?? internalOpen;
+  const setModalOpen = (value) => {
+    if (open === undefined) setInternalOpen(value);
+    onOpenChange?.(value);
+  };
   const [active, setActive] = useState("Feedback");
 
   //   Feedback Form Data
@@ -26,7 +31,10 @@ export const InfoBtn = React.forwardRef(function InfoBtn(
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState(null);
 
-  const openFeedbackNew = () => setModalOpen(true);
+  const openFeedbackNew = (event) => {
+    onClick?.(event);
+    if (!event.defaultPrevented) setModalOpen(true);
+  };
 
   const closeFeedbackNew = () => setModalOpen(false);
 
@@ -112,10 +120,12 @@ export const InfoBtn = React.forwardRef(function InfoBtn(
 
   return (
     <div>
-      <Button
+      {!hideTrigger && <Button
         ref={ref}
         variant={variant}
         size={size}
+        type="button"
+        aria-label="Open feedback and updates"
         onClick={openFeedbackNew}
         className={cn(
           "relative overflow-hidden transition-colors focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 cursor-pointer",
@@ -129,12 +139,12 @@ export const InfoBtn = React.forwardRef(function InfoBtn(
             "h-[1.2rem] w-[1.2rem] transition-all duration-300 ease-in-out text-gray-500",
           )}
         />
-      </Button>
+      </Button>}
 
       {modalOpen && (
         <div
           onClick={closeFeedbackNew}
-          className="fixed flex inset-0 bg-black/30 backdrop-blur-xs items-center justify-center z-20"
+          className="fixed flex inset-0 bg-black/30 backdrop-blur-xs items-center justify-center z-10"
         >
           {/* Popup Modal for Feedback Form & New Updates Section */}
           <div
@@ -148,6 +158,8 @@ export const InfoBtn = React.forwardRef(function InfoBtn(
 
               {/* Popup Close */}
               <button
+                type="button"
+                aria-label="Close feedback and updates"
                 onClick={closeFeedbackNew}
                 className="border-none text-lg cursor-pointer"
               >

@@ -12,7 +12,7 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import { Menu } from "lucide-react";
+import { Info, Menu, Settings } from "lucide-react";
 import { ModeToggle } from "./ui/ModeBtn";
 import { QuickSettings } from "./ui/QuickSettings";
 import { InfoBtn } from "./ui/InfoBtn";
@@ -27,6 +27,7 @@ export default function Navbar({ authConfigured = false }) {
   // Active Tabs
   const [active, setActive] = useState("Home");
   const [sheetOpen, setSheetOpen] = useState(false);
+  const [activeModal, setActiveModal] = useState(null);
   const registrationStatus = useSyncExternalStore(
     subscribeRegistration,
     getRegistrationStatus,
@@ -41,15 +42,14 @@ export default function Navbar({ authConfigured = false }) {
         Login
       </Link>
     ) : (
-      <Button variant="outline" aschild="true" className="rounded-lg px-5 py-1.5 text-center font-semibold">
-      <Link
+      <Button
         variant="outline"
-        href="/register"
-        
+        nativeButton={false}
+        render={<Link href="/register" prefetch={true} />}
+        className="rounded-lg px-5 py-1.5 text-center font-semibold"
       >
         Register
-      </Link>
-    </Button>
+      </Button>
     );
   const mobileAccountLink =
     registrationStatus === "registered" ? (
@@ -71,6 +71,10 @@ export default function Navbar({ authConfigured = false }) {
     );
 
   // Closing Sheet Component When Popup Modal Opens
+  const openSheetModal = (modal) => {
+    setActiveModal(modal);
+    setSheetOpen(false);
+  };
 
   return (
     <nav className="fixed w-full h-36 md:h-16 items-center">
@@ -109,11 +113,11 @@ export default function Navbar({ authConfigured = false }) {
             Quest
           </Link>
           <Link
-            href="/games"
-            onClick={() => setActive("Games")}
-            className={`${active === "Games" ? "text-primary" : "text-gray-700 hover:text-primary/85 dark:text-gray-200"}`}
+            href="/community"
+            onClick={() => setActive("Community")}
+            className={`${active === "Community" ? "text-primary" : "text-gray-700 hover:text-primary/85 dark:text-gray-200"}`}
           >
-            Games
+            Community
           </Link>
         </ul>
 
@@ -144,85 +148,91 @@ export default function Navbar({ authConfigured = false }) {
                   </Button>
                 }
               />
-              <SheetContent>
+              {sheetOpen && <SheetContent>
                 <SheetHeader>
                   <SheetTitle className="text-3xl md:text-4xl font-display font-extrabold text-primary">
                     DiarySpark
                   </SheetTitle>
                   <SheetDescription></SheetDescription>
-                  {/* Page Tabs */}
-                  <div className="flex flex-col items-center text-xl md:text-2xl lg:text-lg gap-5 font-body font-semibold mt-12 border-b pb-8 pt-3 overflow-hidden overflow-y-scroll no-scrollbar">
-                    <Link
-                      onClick={() => setActive("Home")}
-                      href="/"
-                      className={`w-96 text-center py-2 rounded-lg ${active === "Home" ? "text-primary bg-primary-foreground dark:bg-muted focus:ring focus:ring-violet-300" : "text-gray-700 dark:text-gray-200"}`}
-                    >
-                      Home
-                    </Link>
-                    <Link
-                      onClick={() => setActive("Blog")}
-                      href="/blog"
-                      className={`w-96 text-center py-2 rounded-lg ${active === "Blog" ? "text-primary bg-primary-foreground dark:bg-muted focus:ring focus:ring-violet-300" : "text-gray-700 dark:text-gray-200"}`}
-                    >
-                      Blog
-                    </Link>
-                    <Link
-                      onClick={() => setActive("Trivia")}
-                      href="/trivia"
-                      className={`w-96 text-center py-2 rounded-lg ${active === "Trivia" ? "text-primary bg-primary-foreground dark:bg-muted focus:ring focus:ring-violet-300" : "text-gray-700 dark:text-gray-200"}`}
-                    >
-                      Trivia
-                    </Link>
-                    <Link
-                      onClick={() => setActive("Quest")}
-                      href="/quest"
-                      className={`w-96 text-center py-2 rounded-lg ${active === "Quest" ? "text-primary bg-primary-foreground dark:bg-muted focus:ring focus:ring-violet-300" : "text-gray-700 dark:text-gray-200"}`}
-                    >
-                      Quest
-                    </Link>
-                    <Link
-                      onClick={() => setActive("Games")}
-                      href="/games"
-                      className={`w-96 text-center py-2 rounded-lg ${active === "Games" ? "text-primary bg-primary-foreground dark:bg-muted focus:ring focus:ring-violet-300" : "text-gray-700 dark:text-gray-200"}`}
-                    >
-                      Games
-                    </Link>
-                  </div>
-                  <div className="flex flex-col w-full mt-12 md:mt-72">
-                    <h2 className="text-2xl font-display font-semibold w-full">
-                      Accessibility
-                    </h2>
-                    <div className="w-full">
-                      {/* Mode Toggle Button */}
-                      <div className="flex flex-row items-center mt-5 gap-2">
-                        <ModeToggle className="w-1/3 h-9" />
+                </SheetHeader>
+                {/* Page Tabs */}
+                <div className="flex flex-col items-center text-xl md:text-2xl lg:text-lg gap-5 font-body font-semibold mt-12 border-b pb-8 pt-3 overflow-hidden overflow-y-scroll no-scrollbar">
+                  <Link
+                    onClick={() => setActive("Home")}
+                    href="/"
+                    className={`w-96 text-center py-2 rounded-lg ${active === "Home" ? "text-primary bg-primary-foreground dark:bg-muted focus:ring focus:ring-violet-300" : "text-gray-700 dark:text-gray-200"}`}
+                  >
+                    Home
+                  </Link>
+                  <Link
+                    onClick={() => setActive("Blog")}
+                    href="/blog"
+                    className={`w-96 text-center py-2 rounded-lg ${active === "Blog" ? "text-primary bg-primary-foreground dark:bg-muted focus:ring focus:ring-violet-300" : "text-gray-700 dark:text-gray-200"}`}
+                  >
+                    Blog
+                  </Link>
+                  <Link
+                    onClick={() => setActive("Trivia")}
+                    href="/trivia"
+                    className={`w-96 text-center py-2 rounded-lg ${active === "Trivia" ? "text-primary bg-primary-foreground dark:bg-muted focus:ring focus:ring-violet-300" : "text-gray-700 dark:text-gray-200"}`}
+                  >
+                    Trivia
+                  </Link>
+                  <Link
+                    onClick={() => setActive("Quest")}
+                    href="/quest"
+                    className={`w-96 text-center py-2 rounded-lg ${active === "Quest" ? "text-primary bg-primary-foreground dark:bg-muted focus:ring focus:ring-violet-300" : "text-gray-700 dark:text-gray-200"}`}
+                  >
+                    Quest
+                  </Link>
+                  <Link
+                    onClick={() => setActive("Community")}
+                    href="/community"
+                    className={`w-96 text-center py-2 rounded-lg ${active === "Community" ? "text-primary bg-primary-foreground dark:bg-muted focus:ring focus:ring-violet-300" : "text-gray-700 dark:text-gray-200"}`}
+                  >
+                    Community
+                  </Link>
+                </div>
+                <div className="flex flex-col w-full mt-12 md:mt-72">
+                  <h2 className="text-2xl font-display font-semibold w-full">
+                    Accessibility
+                  </h2>
+                  <div className="w-full z-auto">
+                    {/* Mode Toggle Button */}
+                    <div className="flex flex-row items-center mt-5 gap-2">
+                      <ModeToggle className="w-1/3 h-9" />
 
-                        {/* Quick Settings Button */}
-                        <div className="w-1/3">
-                          <QuickSettings className="w-full h-9" />
-                        </div>
-
-                        {/* Feadback & Updates Button */}
-                        <div className="w-1/3">
-                          <InfoBtn className="w-full h-9" />
-                        </div>
+                      {/* Quick Settings Button */}
+                      <div className="w-1/3">
+                        <Button type="button" size="icon" aria-label="Open quick settings" onClick={() => openSheetModal("settings")} className="w-full h-9 relative overflow-hidden transition-colors focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 cursor-pointer">
+                          <Settings aria-hidden="true" className="h-[1.2rem] w-[1.2rem] transition-all duration-300 ease-in-out" />
+                        </Button>
                       </div>
-                      <div className="flex flex-row items-center mt-5 gap-2">
-                        <ModeToggle className="w-1/3 h-9" />
 
-                        {/* Quick Settings Button */}
-                        <div className="w-1/3">
-                          <QuickSettings className="w-full h-9" />
-                        </div>
-
-                        {/* Feadback & Updates Button */}
-                        <div className="w-1/3">
-                          <InfoBtn className="w-full h-9" />
-                        </div>
+                      {/* Feadback & Updates Button */}
+                      <div className="w-1/3">
+                        <Button type="button" variant="outline" size="icon" aria-label="Open feedback and updates" onClick={() => openSheetModal("feedback")} className="w-full h-9 relative overflow-hidden transition-colors focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 cursor-pointer">
+                          <Info aria-hidden="true" className="h-[1.2rem] w-[1.2rem] transition-all duration-300 ease-in-out text-gray-500" />
+                        </Button>
                       </div>
                     </div>
+
+                    {/* <div className="flex flex-row items-center mt-5 gap-2">
+                      <ModeToggle className="w-1/3 h-9" />
+
+                      
+                      <div className="w-1/3">
+                        <QuickSettings className="w-full h-9" />
+                      </div>
+
+                      
+                      <div className="w-1/3">
+                        <InfoBtn className="w-full h-9" />
+                      </div>
+                    </div> */}
+
                   </div>
-                </SheetHeader>
+                </div>
                 <SheetFooter>
                   {authConfigured ? (
                     <>
@@ -234,11 +244,14 @@ export default function Navbar({ authConfigured = false }) {
                         >
                           Login
                         </Link>
-                        <Button variant="outline" aschild="true" className="block w-full rounded-lg px-5 py-0.5 text-lg text-center font-semibold">
+                        <Button
+                          variant="outline"
+                          aschild="true"
+                          className="block w-full rounded-lg px-5 py-0.5 text-lg text-center font-semibold"
+                        >
                           <Link
                             href="/register"
                             onClick={() => setSheetOpen(false)}
-                            
                           >
                             Register
                           </Link>
@@ -252,11 +265,13 @@ export default function Navbar({ authConfigured = false }) {
                     mobileAccountLink
                   )}
                 </SheetFooter>
-              </SheetContent>
+              </SheetContent>}
             </Sheet>
           </div>
         </div>
       </div>
+      <QuickSettings hideTrigger open={activeModal === "settings"} onOpenChange={(open) => { if (!open) setActiveModal(null); }} />
+      <InfoBtn hideTrigger open={activeModal === "feedback"} onOpenChange={(open) => { if (!open) setActiveModal(null); }} />
     </nav>
   );
 }

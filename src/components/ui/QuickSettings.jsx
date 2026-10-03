@@ -7,23 +7,33 @@ import { cn } from "@/lib/utils";
 import { Settings, X } from "lucide-react";
 
 export const QuickSettings = React.forwardRef(function QuickSettings(
-  { className, variant, size = "icon", onClick, ...props },
+  { className, variant, size = "icon", onClick, open, onOpenChange, hideTrigger = false, ...props },
   ref,
 ) {
   // Open Quick Settings Modal & Active Tabs
-  const [modalOpen, setModalOpen] = useState(false);
+  const [internalOpen, setInternalOpen] = useState(false);
+  const modalOpen = open ?? internalOpen;
+  const setModalOpen = (value) => {
+    if (open === undefined) setInternalOpen(value);
+    onOpenChange?.(value);
+  };
   const [active, setActive] = useState("General");
 
-  const OpenSettings = () => setModalOpen(true);
+  const OpenSettings = (event) => {
+    onClick?.(event);
+    if (!event.defaultPrevented) setModalOpen(true);
+  };
 
   const closeSettings = () => setModalOpen(false);
 
   return (
     <div>
-      <Button
+      {!hideTrigger && <Button
         ref={ref}
         variant={variant}
         size={size}
+        type="button"
+        aria-label="Open quick settings"
         onClick={OpenSettings}
         className={cn(
           "relative overflow-hidden transition-colors focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 cursor-pointer",
@@ -38,7 +48,7 @@ export const QuickSettings = React.forwardRef(function QuickSettings(
             "h-[1.2rem] w-[1.2rem] transition-all duration-300 ease-in-out",
           )}
         />
-      </Button>
+      </Button>}
 
       {modalOpen && (
         <div
@@ -47,7 +57,7 @@ export const QuickSettings = React.forwardRef(function QuickSettings(
         >
           {/* Popup Modal for Quick Settings */}
           <div
-            className="w-full h-full md:w-250 md:h-150 bg-background px-3 py-2 md:rounded-lg text-gray-800 dark:text-white"
+            className="w-full h-full md:w-250 md:h-150 bg-background p-3 md:rounded-lg text-gray-800 dark:text-white"
             onClick={(e) => e.stopPropagation()}
           >
             <div className="flex justify-between pb-2">
@@ -57,6 +67,8 @@ export const QuickSettings = React.forwardRef(function QuickSettings(
 
               {/* Popup Close */}
               <button
+                type="button"
+                aria-label="Close quick settings"
                 onClick={closeSettings}
                 className="border-none text-lg cursor-pointer"
               >
