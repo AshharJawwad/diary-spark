@@ -41,13 +41,15 @@ export default function Navbar({ authConfigured = false }) {
         Login
       </Link>
     ) : (
+      <Button variant="outline" aschild="true" className="rounded-lg px-5 py-1.5 text-center font-semibold">
       <Link
         variant="outline"
         href="/register"
-        className="rounded-lg bg-primary px-5 py-1.5 text-center font-semibold text-primary-foreground"
+        
       >
         Register
       </Link>
+    </Button>
     );
   const mobileAccountLink =
     registrationStatus === "registered" ? (

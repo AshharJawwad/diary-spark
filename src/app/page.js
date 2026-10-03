@@ -3,9 +3,9 @@ import { ChevronRight } from "lucide-react";
 
 export default function Home() {
   return (
-    <div className="mt-16 items-center w-full ">
+    <div className="items-center w-full">
       {/* Hero Section */}
-      <div className="flex flex-col w-full h-96 md:h-155 items-center justify-center bg-background"></div>
+      <div className="flex flex-col w-full h-96 md:h-155 mt-15 md:mt-16 items-center justify-center bg-background"></div>
 
       {/* Blogs Section */}
       <div className="flex flex-col w-full min-h-96 p-5 mt-5 md:w-7xl mx-auto rounded-lg">
@@ -14,7 +14,7 @@ export default function Home() {
 
           <Button
             variant="ghost"
-            className="w-8 h-8 rounded-full cursor-pointer z-10"
+            className="w-8 h-8 rounded-full cursor-pointer"
           >
             <ChevronRight />
           </Button>
@@ -28,7 +28,7 @@ export default function Home() {
 
           <Button
             variant="ghost"
-            className="w-8 h-8 rounded-full cursor-pointer z-10"
+            className="w-8 h-8 rounded-full cursor-pointer"
           >
             <ChevronRight />
           </Button>
@@ -42,7 +42,7 @@ export default function Home() {
 
           <Button
             variant="ghost"
-            className="w-8 h-8 rounded-full cursor-pointer z-10"
+            className="w-8 h-8 rounded-full cursor-pointer"
           >
             <ChevronRight />
           </Button>
@@ -51,8 +51,8 @@ export default function Home() {
 
       {/* Feature Cards */}
       <div className="w-full  mx-auto p-6">
-        <div className="grid grid-cols-2 gap-4">
-          <div className="w-full h-155 justify-center bg-background rounded-lg shadow">
+        <div className="grid md:grid-cols-2 gap-4">
+          <div className="w-full h-96 md:h-155 justify-center bg-background rounded-lg shadow">
             <div className="flex flex-col h-full items-center justify-center gap-6">
               <span className="text-xs text-center font-body border rounded-sm px-1.5 py-0.5">
                 Blogs
@@ -66,7 +66,7 @@ export default function Home() {
               </Button>
             </div>
           </div>
-          <div className="w-full h-155 justify-center bg-background rounded-lg shadow">
+          <div className="w-full h-96 md:h-155 justify-center bg-background rounded-lg shadow">
             <div className="flex flex-col h-full items-center justify-center gap-6">
               <span className="text-xs text-center font-body border rounded-sm px-1.5 py-0.5">
                 Trivia
@@ -80,7 +80,7 @@ export default function Home() {
               </Button>
             </div>
           </div>
-          <div className="w-full h-155 justify-center bg-background rounded-lg shadow">
+          <div className="w-full h-96 md:h-155 justify-center bg-background rounded-lg shadow">
             <div className="flex flex-col h-full items-center justify-center gap-6">
               <span className="text-xs text-center font-body border rounded-sm px-1.5 py-0.5">
                 Blogs
@@ -94,7 +94,7 @@ export default function Home() {
               </Button>
             </div>
           </div>
-          <div className="w-full h-155 justify-center bg-background rounded-lg shadow">
+          <div className="w-full h-96 md:h-155 justify-center bg-background rounded-lg shadow">
             <div className="flex flex-col h-full items-center justify-center gap-6">
               <span className="text-xs text-center font-body border rounded-sm px-1.5 py-0.5">
                 Blogs
