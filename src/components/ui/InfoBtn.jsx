@@ -51,7 +51,10 @@ export const InfoBtn = React.forwardRef(function InfoBtn(
         body: JSON.stringify(formData),
       });
 
-      if (!response.ok) throw new Error("Something went wrong. Please try again.");
+      if (!response.ok) {
+        const result = await response.json().catch(() => ({}));
+        throw new Error(result.error || "Something went wrong. Please try again.");
+      }
 
       setSubmitted(true);
       setFormData({ name: "", email: "", message: "" });
@@ -71,7 +74,7 @@ export const InfoBtn = React.forwardRef(function InfoBtn(
     return (
       <div
         onClick={closeSubmitted}
-        className="fixed flex flex-col inset-0 bg-black/30 backdrop-blur-xs items-center justify-center z-10"
+        className="fixed flex flex-col inset-0 bg-black/30 backdrop-blur-xs items-center justify-center"
       >
         <div
           onClick={(e) => e.stopPropagation()}

@@ -3,6 +3,7 @@ import "./globals.css";
 import Navbar from "@/components/Navbar";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import ActionBar from "@/components/ActionBar";
+import { ClerkProvider } from "@clerk/nextjs";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -23,6 +24,14 @@ export const metadata = {
 };
 
 export default function RootLayout({ children }) {
+  const authConfigured = Boolean(process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY && process.env.CLERK_SECRET_KEY);
+  const content = (
+    <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
+      <Navbar authConfigured={authConfigured} />
+      <ActionBar />
+      {children}
+    </ThemeProvider>
+  );
   return (
     <html
       lang="en"
@@ -30,16 +39,11 @@ export default function RootLayout({ children }) {
       suppressHydrationWarning
     >
       <body className="min-h-full flex flex-col font-body bg-primary-foreground dark:bg-muted-foreground overflow-hidden overflow-y-scroll">
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
-          <Navbar />
-          <ActionBar />
-          {children}
-        </ThemeProvider>
+        {authConfigured ? (
+          <ClerkProvider signInUrl="/login" signUpUrl="/register" signInFallbackRedirectUrl="/" signUpFallbackRedirectUrl="/">
+            {content}
+          </ClerkProvider>
+        ) : content}
       </body>
     </html>
   );

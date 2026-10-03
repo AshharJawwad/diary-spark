@@ -42,7 +42,7 @@ export const QuickSettings = React.forwardRef(function QuickSettings(
 
       {modalOpen && (
         <div
-          className="fixed flex inset-0 bg-black/30 backdrop-blur-xs items-center justify-center z-20"
+          className="fixed flex inset-0 bg-black/30 backdrop-blur-xs items-center justify-center z-10"
           onClick={closeSettings}
         >
           {/* Popup Modal for Quick Settings */}
@@ -58,7 +58,7 @@ export const QuickSettings = React.forwardRef(function QuickSettings(
               {/* Popup Close */}
               <button
                 onClick={closeSettings}
-                className="border-none text-lg cursor-pointer z-30"
+                className="border-none text-lg cursor-pointer"
               >
                 <X className="w-[1.2rem] h-[1.2rem]" />
               </button>

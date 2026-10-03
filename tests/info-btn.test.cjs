@@ -16,7 +16,7 @@ function setup(fetch) {
     value => { state.submitted = value; },
     value => { state.formData = value; },
     value => { state.error = value; },
-    "/api/feedback", false, callback => callback());
+    "/api", false, callback => callback());
   return { state, original, submit: () => submit({ preventDefault() {} }) };
 }
 
@@ -27,7 +27,7 @@ test("successful feedback posts the payload and clears the form", async () => {
     return { ok: true };
   });
   await submit();
-  assert.equal(request.url, "/api/feedback");
+  assert.equal(request.url, "/api");
   assert.equal(request.options.method, "POST");
   assert.deepEqual(JSON.parse(request.options.body), original);
   assert.equal(state.submitted, true);
@@ -36,7 +36,7 @@ test("successful feedback posts the payload and clears the form", async () => {
 });
 
 for (const [name, fetch] of [
-  ["HTTP error", async () => ({ ok: false, status: 500 })],
+  ["HTTP error", async () => ({ ok: false, status: 500, json: async () => ({ error: "Unable to save feedback." }) })],
   ["network rejection", async () => { throw new Error("Network unavailable"); }],
 ]) {
   test(`${name} preserves inputs, reports an error, and allows retry`, async () => {

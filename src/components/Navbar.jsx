@@ -1,11 +1,10 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useSyncExternalStore } from "react";
 import Link from "next/link";
 import { Button } from "./ui/button";
 import {
   Sheet,
-  SheetClose,
   SheetContent,
   SheetDescription,
   SheetFooter,
@@ -17,15 +16,62 @@ import { Menu } from "lucide-react";
 import { ModeToggle } from "./ui/ModeBtn";
 import { QuickSettings } from "./ui/QuickSettings";
 import { InfoBtn } from "./ui/InfoBtn";
+import { Show, UserButton } from "@clerk/nextjs";
+import {
+  getRegistrationStatus,
+  getServerRegistrationStatus,
+  subscribeRegistration,
+} from "@/lib/browser-registration.mjs";
 
-export default function Navbar() {
+export default function Navbar({ authConfigured = false }) {
   // Active Tabs
   const [active, setActive] = useState("Home");
+  const [sheetOpen, setSheetOpen] = useState(false);
+  const registrationStatus = useSyncExternalStore(
+    subscribeRegistration,
+    getRegistrationStatus,
+    getServerRegistrationStatus,
+  );
+  const accountLink =
+    registrationStatus === "registered" ? (
+      <Link
+        href="/login"
+        className="rounded-lg bg-primary px-5 py-1.5 text-center font-semibold text-primary-foreground"
+      >
+        Login
+      </Link>
+    ) : (
+      <Link
+        variant="outline"
+        href="/register"
+        className="rounded-lg bg-primary px-5 py-1.5 text-center font-semibold text-primary-foreground"
+      >
+        Register
+      </Link>
+    );
+  const mobileAccountLink =
+    registrationStatus === "registered" ? (
+      <Link
+        href="/login"
+        onClick={() => setSheetOpen(false)}
+        className="block w-full rounded-full bg-primary px-5 py-2 text-center font-semibold text-primary-foreground"
+      >
+        Login
+      </Link>
+    ) : (
+      <Link
+        href="/register"
+        onClick={() => setSheetOpen(false)}
+        className="block w-full rounded-full bg-primary px-5 py-2 text-center font-semibold text-primary-foreground"
+      >
+        Register
+      </Link>
+    );
 
   // Closing Sheet Component When Popup Modal Opens
 
   return (
-    <nav className="fixed w-full h-36 md:h-16 items-center z-20">
+    <nav className="fixed w-full h-36 md:h-16 items-center">
       <div className="relative flex items-center justify-between lg:justify-around pt-3 pl-3 pb-3 bg-background border-b border-b-gray-200 dark:border-b-gray-800">
         <h1 className="font-extrabold text-3xl md:text-4xl lg:text-4xl text-primary font-display">
           DiarySpark
@@ -35,35 +81,35 @@ export default function Navbar() {
           <Link
             href="/"
             onClick={() => setActive("Home")}
-            className={`${active === "Home" ? "text-primary" : "text-gray-700 dark:text-gray-200"}`}
+            className={`${active === "Home" ? "text-primary" : "text-gray-700 hover:text-primary/85 dark:text-gray-200"}`}
           >
             Home
           </Link>
           <Link
             href="/blog"
             onClick={() => setActive("Blog")}
-            className={`${active === "Blog" ? "text-primary" : "text-gray-700 dark:text-gray-200"}`}
+            className={`${active === "Blog" ? "text-primary" : "text-gray-700 hover:text-primary/85 dark:text-gray-200"}`}
           >
             Blog
           </Link>
           <Link
             href="/trivia"
             onClick={() => setActive("Trivia")}
-            className={`${active === "Trivia" ? "text-primary" : "text-gray-700 dark:text-gray-200"}`}
+            className={`${active === "Trivia" ? "text-primary" : "text-gray-700 hover:text-primary/85 dark:text-gray-200"}`}
           >
             Trivia
           </Link>
           <Link
             href="/quest"
             onClick={() => setActive("Quest")}
-            className={`${active === "Quest" ? "text-primary" : "text-gray-700 dark:text-gray-200"}`}
+            className={`${active === "Quest" ? "text-primary" : "text-gray-700 hover:text-primary/85 dark:text-gray-200"}`}
           >
             Quest
           </Link>
           <Link
             href="/games"
             onClick={() => setActive("Games")}
-            className={`${active === "Games" ? "text-primary" : "text-gray-700 dark:text-gray-200"}`}
+            className={`${active === "Games" ? "text-primary" : "text-gray-700 hover:text-primary/85 dark:text-gray-200"}`}
           >
             Games
           </Link>
@@ -74,14 +120,21 @@ export default function Navbar() {
             <Button className="px-4 py-1 w-32 font-semibold border rounded-full text-lg text-center cursor-pointer">
               Subscribe
             </Button>
-            <Button className="px-4 py-1 w-24 font-semibold border rounded-full text-lg text-center cursor-pointer">
-              Login
-            </Button>
+            {authConfigured ? (
+              <>
+                <Show when="signed-out">{accountLink}</Show>
+                <Show when="signed-in">
+                  <UserButton />
+                </Show>
+              </>
+            ) : (
+              accountLink
+            )}
           </div>
 
           {/* Mobile Navigation Side Bar */}
           <div className="flex lg:hidden">
-            <Sheet>
+            <Sheet open={sheetOpen} onOpenChange={setSheetOpen}>
               <SheetTrigger
                 render={
                   <Button variant="outline" className="cursor-pointer">
@@ -169,15 +222,33 @@ export default function Navbar() {
                   </div>
                 </SheetHeader>
                 <SheetFooter>
-                  <Button className="w-full text-lg font-semibold font-body">
-                    Login
-                  </Button>
-                  <Button
-                    variant="outline"
-                    className="w-full text-lg font-semibold font-body"
-                  >
-                    Register
-                  </Button>
+                  {authConfigured ? (
+                    <>
+                      <Show when="signed-out">
+                        <Link
+                          href="/login"
+                          onClick={() => setSheetOpen(false)}
+                          className="block w-full rounded-lg bg-primary px-5 py-0.5 text-lg text-center font-semibold text-primary-foreground"
+                        >
+                          Login
+                        </Link>
+                        <Button variant="outline" aschild="true" className="block w-full rounded-lg px-5 py-0.5 text-lg text-center font-semibold">
+                          <Link
+                            href="/register"
+                            onClick={() => setSheetOpen(false)}
+                            
+                          >
+                            Register
+                          </Link>
+                        </Button>
+                      </Show>
+                      <Show when="signed-in">
+                        <UserButton />
+                      </Show>
+                    </>
+                  ) : (
+                    mobileAccountLink
+                  )}
                 </SheetFooter>
               </SheetContent>
             </Sheet>
