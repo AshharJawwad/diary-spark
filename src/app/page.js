@@ -61,7 +61,7 @@ export default function Home() {
                 For Readers
                 <span className="flex flex-col">Knowledge That Matters</span>
               </h3>
-              <Button className="py-5 px-6 z-10 rounded-full text-lg mt-8 cursor-pointer">
+              <Button className="py-5 px-6 rounded-full text-lg mt-8 cursor-pointer">
                 Read Blogs
               </Button>
             </div>
@@ -75,7 +75,7 @@ export default function Home() {
                 For Readers
                 <span className="flex flex-col">Knowledge That Matters</span>
               </h3>
-              <Button variant="outline" className="py-5 px-6 z-10 rounded-full text-lg mt-8 cursor-pointer">
+              <Button variant="outline" className="py-5 px-6 rounded-full text-lg mt-8 cursor-pointer">
                 View Trivia
               </Button>
             </div>
@@ -89,7 +89,7 @@ export default function Home() {
                 For Readers
                 <span className="flex flex-col">Knowledge That Matters</span>
               </h3>
-              <Button className="py-5 px-6 z-10 rounded-full text-lg mt-8 cursor-pointer">
+              <Button className="py-5 px-6 rounded-full text-lg mt-8 cursor-pointer">
                 Read Blogs
               </Button>
             </div>
@@ -103,7 +103,7 @@ export default function Home() {
                 For Readers
                 <span className="flex flex-col">Knowledge That Matters</span>
               </h3>
-              <Button className="py-5 px-6 z-10 rounded-full text-lg mt-8 cursor-pointer">
+              <Button className="py-5 px-6 rounded-full text-lg mt-8 cursor-pointer">
                 Read Blogs
               </Button>
             </div>

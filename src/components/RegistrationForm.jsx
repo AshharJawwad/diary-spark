@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { Eye, EyeOff } from "lucide-react";
 import { useAuth, useSignUp } from "@clerk/nextjs";
@@ -57,7 +57,15 @@ function ClerkRegistrationForm({ initialEmail }) {
   const [notice, setNotice] = useState("");
   const [details, setDetails] = useState({ email: initialEmail });
   const inFlight = useRef(false);
+  const verificationInputRef = useRef(null);
   const busy = pending || fetchStatus === "fetching";
+
+  useEffect(() => {
+    if (step === "verification" && !busy) {
+      verificationInputRef.current?.focus();
+      verificationInputRef.current?.select();
+    }
+  }, [step, busy]);
 
   async function finish() {
     if (signUp.status !== "complete") throw new Error("Registration is not complete. Please verify your email and try again.");
@@ -144,7 +152,7 @@ function ClerkRegistrationForm({ initialEmail }) {
         <p className="text-sm">Enter the code sent to your email address to complete registration.</p>
         <form onSubmit={handleVerification} className="space-y-4 z-20" aria-busy={busy}>
           <label htmlFor="register-code" className="block text-sm font-semibold">Verification code</label>
-          <input id="register-code" name="code" type="text" inputMode="numeric" autoComplete="one-time-code" required disabled={busy} className={inputClass} />
+          <input ref={verificationInputRef} id="register-code" name="code" type="text" inputMode="numeric" autoComplete="one-time-code" required disabled={busy} className={inputClass} />
           {error && <p role="alert" className="text-sm text-destructive">{error}</p>}
           {notice && <p role="status" className="text-sm">{notice}</p>}
           <Button type="submit" disabled={busy} className="w-full">{busy ? "Please wait…" : "Verify email"}</Button>
