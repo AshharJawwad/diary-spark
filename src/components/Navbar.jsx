@@ -64,12 +64,12 @@ function NavbarAccount({ children, onSignIn, mobile = false }) {
           userButtonTrigger: {
             display: "inline-flex",
             alignItems: "center",
-            justifyContent: mobile ? "left" : "center",
+            justifyContent: mobile ? "left" : "flex-end",
             boxShadow: "0px 1px 2px rgba(0, 0, 0, 0.2)",
             height: mobile ? "3.5rem" : "2.5rem",
             width: mobile ? "100%" : "10.75rem",
             maxWidth: "100%",
-            paddingInline: mobile ? "0.35rem" : undefined,
+            paddingInline: mobile ? "0.35rem" : "0.35rem",
             borderRadius: mobile ? "10px" : "9999px",
           },
           userButtonPopoverCard: { maxWidth: "calc(100vw - 1rem)" },
@@ -172,11 +172,11 @@ export default function Navbar({ authConfigured = false }) {
             Quest
           </Link>
           <Link
-            href="/community"
-            onClick={() => setActive("Community")}
-            className={`${active === "Community" ? "text-primary" : "text-gray-700 hover:text-primary/85 dark:text-gray-200"}`}
+            href="/hubb"
+            onClick={() => setActive("Hubb")}
+            className={`${active === "Hubb" ? "text-primary" : "text-gray-700 hover:text-primary/85 dark:text-gray-200"}`}
           >
-            Community
+            Hubb
           </Link>
         </ul>
 
@@ -241,11 +241,11 @@ export default function Navbar({ authConfigured = false }) {
                       Quest
                     </Link>
                     <Link
-                      onClick={() => setActive("Community")}
-                      href="/community"
-                      className={`w-96 text-center py-2 rounded-lg ${active === "Community" ? "text-primary bg-primary-foreground dark:bg-muted focus:ring focus:ring-violet-300" : "text-gray-700 dark:text-gray-200"}`}
+                      onClick={() => setActive("Hub")}
+                      href="/hub"
+                      className={`w-96 text-center py-2 rounded-lg ${active === "Hub" ? "text-primary bg-primary-foreground dark:bg-muted focus:ring focus:ring-violet-300" : "text-gray-700 dark:text-gray-200"}`}
                     >
-                      Community
+                      Hub
                     </Link>
                   </div>
                   <div className="flex flex-col w-full mt-12 md:mt-72 p-4">

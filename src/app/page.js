@@ -1,7 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { ChevronRight } from "lucide-react";
 
-
 export const metadata = {
   title: "DiarySpark - Home",
   description: "A platform for gaining knowledge and helping others.",
@@ -56,9 +55,9 @@ export default function Home() {
       </div>
 
       {/* Feature Cards */}
-      <div className="w-full  mx-auto p-3 pt-8 pb-8 md:pt-12 md:pb-12 md:p-6 border-t border-b mt-5 mb-5">
-        <div className="grid md:grid-cols-2">
-          <div className="w-full h-96 md:h-155 justify-center bg-background rounded-lg shadow">
+      <div className="w-full mx-auto pt-8 pb-8 md:pt-12 md:pb-12 border-t border-b mt-5 mb-5">
+        <div className="grid grid-cols-1 md:grid-cols-2">
+          <div className="w-full h-96 md:h-155 justify-center bg-background">
             <div className="flex flex-col h-full items-center justify-center gap-6">
               <span className="text-xs text-center font-body border rounded-sm px-1.5 py-0.5">
                 Blogs
@@ -72,7 +71,7 @@ export default function Home() {
               </Button>
             </div>
           </div>
-          <div className="w-full h-96 md:h-155 justify-center bg-background rounded-lg shadow">
+          <div className="w-full h-96 md:h-155 justify-center bg-background">
             <div className="flex flex-col h-full items-center justify-center gap-6">
               <span className="text-xs text-center font-body border rounded-sm px-1.5 py-0.5">
                 Trivia
@@ -81,12 +80,15 @@ export default function Home() {
                 For Readers
                 <span className="flex flex-col">Knowledge That Matters</span>
               </h3>
-              <Button variant="outline" className="py-5 px-6 rounded-full text-lg mt-8 cursor-pointer">
+              <Button
+                variant="outline"
+                className="py-5 px-6 rounded-full text-lg mt-8 cursor-pointer"
+              >
                 View Trivia
               </Button>
             </div>
           </div>
-          <div className="w-full h-96 md:h-155 justify-center bg-background rounded-lg shadow">
+          <div className="w-full h-96 md:h-155 justify-center bg-background">
             <div className="flex flex-col h-full items-center justify-center gap-6">
               <span className="text-xs text-center font-body border rounded-sm px-1.5 py-0.5">
                 Blogs
@@ -100,7 +102,7 @@ export default function Home() {
               </Button>
             </div>
           </div>
-          <div className="w-full h-96 md:h-155 justify-center bg-background rounded-lg shadow">
+          <div className="w-full h-96 md:h-155 justify-center bg-background">
             <div className="flex flex-col h-full items-center justify-center gap-6">
               <span className="text-xs text-center font-body border rounded-sm px-1.5 py-0.5">
                 Blogs
