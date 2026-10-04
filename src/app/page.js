@@ -1,6 +1,12 @@
 import { Button } from "@/components/ui/button";
 import { ChevronRight } from "lucide-react";
 
+
+export const metadata = {
+  title: "DiarySpark - Home",
+  description: "A platform for gaining knowledge and helping others.",
+};
+
 export default function Home() {
   return (
     <div className="items-center w-full">

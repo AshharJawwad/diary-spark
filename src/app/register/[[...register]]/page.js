@@ -22,7 +22,10 @@ export default async function RegisterPage() {
         <RegistrationForm initialEmail={email} configured={configured} />
         <p className="text-center text-sm">
           Already, have an account?{" "}
-          <Link href="/login" className="font-semibold text-primary hover:underline">
+          <Link
+            href="/login"
+            className="font-semibold text-primary hover:underline"
+          >
             Log in
           </Link>
         </p>

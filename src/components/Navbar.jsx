@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useSyncExternalStore } from "react";
+import { useCallback, useEffect, useRef, useState, useSyncExternalStore } from "react";
 import Link from "next/link";
 import { Button } from "./ui/button";
 import {
@@ -23,37 +23,56 @@ import {
   subscribeRegistration,
 } from "@/lib/browser-registration.mjs";
 
-function NavbarAccount({ children }) {
+function NavbarAccount({ children, onSignIn, mobile = false }) {
   const { isLoaded, isSignedIn } = useAuth();
+  const previousSignedIn = useRef(isSignedIn);
+  useEffect(() => {
+    if (!isLoaded) return;
+    if (isSignedIn && previousSignedIn.current !== true) onSignIn?.();
+    previousSignedIn.current = isSignedIn;
+  }, [isLoaded, isSignedIn, onSignIn]);
   // Keep the account link visible while Clerk initializes for a visitor.
   return isLoaded && isSignedIn ? (
     <UserButton
       showName
+      signInUrl="/login"
       appearance={{
         elements: {
+          rootBox: mobile ? { width: "100%", minWidth: 0 } : {},
           userButtonBox: {
             display: "flex",
+            flexDirection: mobile ? "row-reverse" : "row",
             alignItems: "center",
-            justifyContent: "center",
-            gap: "0.75rem",
+            gap: mobile ? "0.5rem" : "0.75rem",
+            minWidth: 0,
+            maxWidth: "100%",
           },
           userButtonOuterIdentifier: {
-            fontWeight: 600,
-            fontSize: "0.975rem",
+            fontWeight: mobile ? 700 : 600,
+            fontSize: mobile ? "0.9rem" : "0.975rem",
+            minWidth: 0,
+            overflow: "hidden",
+            textOverflow: "ellipsis",
+            whiteSpace: "nowrap",
+            color: "var(--foreground)",
           },
           avatarBox: {
-            width: "2rem",
-            height: "2rem",
+            width: mobile ? "2.75rem" : "2rem",
+            height: mobile ? "2.75rem" : "2rem",
+            flexShrink: 0,
           },
           userButtonTrigger: {
             display: "inline-flex",
             alignItems: "center",
-            justifyContent: "center",
+            justifyContent: mobile ? "left" : "center",
             boxShadow: "0px 1px 2px rgba(0, 0, 0, 0.2)",
-            height: "2.5rem",
-            width: "10.75rem",
-            borderRadius: "9999px",
+            height: mobile ? "3.5rem" : "2.5rem",
+            width: mobile ? "100%" : "10.75rem",
+            maxWidth: "100%",
+            paddingInline: mobile ? "0.35rem" : undefined,
+            borderRadius: mobile ? "10px" : "9999px",
           },
+          userButtonPopoverCard: { maxWidth: "calc(100vw - 1rem)" },
         },
       }}
     />
@@ -66,6 +85,7 @@ export default function Navbar({ authConfigured = false }) {
   // Active Tabs
   const [active, setActive] = useState("Home");
   const [sheetOpen, setSheetOpen] = useState(false);
+  const closeSheet = useCallback(() => setSheetOpen(false), []);
   const [activeModal, setActiveModal] = useState(null);
   const registrationStatus = useSyncExternalStore(
     subscribeRegistration,
@@ -228,7 +248,7 @@ export default function Navbar({ authConfigured = false }) {
                       Community
                     </Link>
                   </div>
-                  <div className="flex flex-col w-full mt-12 md:mt-72">
+                  <div className="flex flex-col w-full mt-12 md:mt-72 p-4">
                     <h2 className="text-2xl font-display font-semibold w-full">
                       Accessibility
                     </h2>
@@ -288,7 +308,7 @@ export default function Navbar({ authConfigured = false }) {
                   </div>
                   <SheetFooter>
                     {authConfigured ? (
-                      <NavbarAccount>
+                      <NavbarAccount mobile onSignIn={closeSheet}>
                         <Link
                           href="/login"
                           prefetch={true}

@@ -1,12 +1,12 @@
 "use client";
 
-import { useState } from "react";
-import Link from "next/link";
+import { useEffect, useRef, useState } from "react";
+import { useRouter } from "next/navigation";
 import { Eye, EyeOff } from "lucide-react";
 import { SignIn, useAuth, useSession, useSignIn } from "@clerk/nextjs";
 import { Button } from "@/components/ui/button";
-import { signInOptions } from "@/lib/auth-policy.mjs";
-import { beginPasswordLogin } from "@/lib/login.mjs";
+import { loginView, signInOptions } from "@/lib/auth-policy.mjs";
+import { beginPasswordLogin, loginVerification, sendLoginCode, verifyLoginCode } from "@/lib/login.mjs";
 import { rememberRegistration } from "@/lib/browser-registration.mjs";
 
 const inputClass = "w-full rounded-lg border bg-background px-4 py-2.5 text-foreground focus-visible:outline-2 focus-visible:outline-primary disabled:opacity-60";
@@ -45,17 +45,46 @@ function Credentials({ initialEmail, disabled, pending, error, onSubmit, onRecov
 
 function ClerkLoginForm({ initialEmail, initialClerkFlow }) {
   const { signIn, fetchStatus } = useSignIn();
-  const { isSignedIn } = useAuth();
-  const { session } = useSession();
+  const { isLoaded, isSignedIn } = useAuth();
+  const { session, isLoaded: sessionLoaded } = useSession();
+  const router = useRouter();
   const [pending, setPending] = useState(false);
   const [error, setError] = useState("");
   const [useClerkFlow, setUseClerkFlow] = useState(initialClerkFlow);
   const [identifier, setIdentifier] = useState(initialEmail);
+  const [verification, setVerification] = useState(null);
+  const [notice, setNotice] = useState("");
+  const inFlight = useRef(false);
+  const codeRef = useRef(null);
   const busy = pending || fetchStatus === "fetching";
+  const view = loginView({ isLoaded: isLoaded && sessionLoaded, isSignedIn, currentTask: session?.currentTask, useClerkFlow });
+
+  useEffect(() => {
+    if (view === "redirect") {
+      rememberRegistration(true);
+      router.replace("/");
+      router.refresh();
+    }
+  }, [view, router]);
+
+  useEffect(() => {
+    if (verification && !busy) codeRef.current?.focus();
+  }, [verification, busy]);
+
+  async function finishLogin() {
+    const result = await signIn.finalize({
+      navigate: ({ session: activeSession, decorateUrl }) => {
+        rememberRegistration(true);
+        window.location.assign(decorateUrl(activeSession?.currentTask ? "/login" : "/"));
+      },
+    });
+    if (result.error) throw result.error;
+  }
 
   async function handleSubmit(event) {
     event.preventDefault();
-    if (busy || !signIn) return;
+    if (inFlight.current || busy || !signIn) return;
+    inFlight.current = true;
     const values = Object.fromEntries(new FormData(event.currentTarget));
     setPending(true);
     setError("");
@@ -63,27 +92,68 @@ function ClerkLoginForm({ initialEmail, initialClerkFlow }) {
     try {
       const status = await beginPasswordLogin(signIn, values);
       if (status === "complete") {
-        const result = await signIn.finalize({
-          navigate: ({ session: activeSession, decorateUrl }) => {
-            rememberRegistration(true);
-            window.location.assign(decorateUrl(activeSession?.currentTask ? "/login" : "/"));
-          },
-        });
-        if (result.error) throw result.error;
+        await finishLogin();
       } else {
-        // Clerk's UI completes device verification, MFA, and other remaining steps.
-        setUseClerkFlow(true);
+        const factor = loginVerification(signIn);
+        if (factor) {
+          setVerification(factor);
+          await sendLoginCode(signIn, factor);
+        } else {
+          // Keep Clerk's flow for recovery, session tasks, and unsupported factors.
+          setUseClerkFlow(true);
+        }
       }
     } catch (err) {
       setError(err?.errors?.[0]?.longMessage || err?.errors?.[0]?.message || err?.message || "Unable to log in. Please try again.");
     }
-    finally { setPending(false); }
+    finally { inFlight.current = false; setPending(false); }
   }
 
-  if (useClerkFlow || session?.currentTask) {
+  async function handleVerification(event) {
+    event.preventDefault();
+    if (inFlight.current || busy || !signIn) return;
+    const code = String(new FormData(event.currentTarget).get("code") || "");
+    inFlight.current = true;
+    setPending(true);
+    setError("");
+    setNotice("");
+    try {
+      await verifyLoginCode(signIn, verification, code);
+      await finishLogin();
+    } catch (err) {
+      setError(err?.errors?.[0]?.longMessage || err?.message || "Unable to verify. Please try again.");
+    } finally { inFlight.current = false; setPending(false); }
+  }
+
+  async function resendCode() {
+    if (inFlight.current || busy || !signIn) return;
+    inFlight.current = true;
+    setPending(true);
+    setError("");
+    setNotice("");
+    try {
+      await sendLoginCode(signIn, verification);
+      setNotice("A new verification code has been sent.");
+    } catch (err) {
+      setError(err?.errors?.[0]?.longMessage || err?.message || "Unable to send a code. Please try again.");
+    } finally { inFlight.current = false; setPending(false); }
+  }
+
+  if (view === "loading" || view === "redirect") return <p role="status">{view === "redirect" ? "Redirecting to home…" : "Loading sign-in…"}</p>;
+  if (view === "clerk") {
     return <SignIn {...signInOptions} initialValues={identifier.includes("@") ? { emailAddress: identifier } : { username: identifier }} appearance={{ elements: { rootBox: "w-full", cardBox: "w-full shadow-none", card: "bg-background text-foreground shadow-none", formButtonPrimary: "bg-primary text-primary-foreground" } }} />;
   }
-  if (isSignedIn) return <p>You’re already signed in. <Link href="/" className="text-primary underline">Go home</Link></p>;
+  if (verification) return (
+    <form onSubmit={handleVerification} className="w-full space-y-4" aria-busy={busy}>
+      <p className="text-sm">{verification.strategy === "totp" ? "Enter the code from your authenticator app." : `Enter the verification code sent to ${verification.safeIdentifier || (verification.strategy === "email_code" ? "your email" : "your phone")}.`}</p>
+      <label htmlFor="login-code" className="block text-sm font-semibold">Verification code</label>
+      <input ref={codeRef} id="login-code" name="code" type="text" inputMode="numeric" autoComplete="one-time-code" required disabled={busy} className={inputClass} />
+      {error && <p role="alert" className="text-sm text-destructive">{error}</p>}
+      {notice && <p role="status" className="text-sm">{notice}</p>}
+      <Button type="submit" disabled={busy} className="w-full">{busy ? "Verifying…" : "Verify and log in"}</Button>
+      {verification.strategy !== "totp" && <button type="button" disabled={busy} onClick={resendCode} className="text-sm font-semibold text-primary underline">Send a new code</button>}
+    </form>
+  );
   return <Credentials initialEmail={initialEmail} disabled={!signIn} pending={busy} error={error} onSubmit={handleSubmit} onRecovery={() => setUseClerkFlow(true)} />;
 }
 

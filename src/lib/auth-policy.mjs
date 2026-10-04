@@ -7,3 +7,10 @@ export const signInOptions = Object.freeze({
   transferable: false,
   forceRedirectUrl: "/",
 });
+
+export function loginView({ isLoaded, isSignedIn, currentTask, useClerkFlow }) {
+  if (!isLoaded) return "loading";
+  if (isSignedIn && !currentTask) return "redirect";
+  if (currentTask || useClerkFlow) return "clerk";
+  return "credentials";
+}

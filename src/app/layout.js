@@ -40,7 +40,7 @@ export default function RootLayout({ children }) {
     >
       <body className="min-h-full flex flex-col font-body bg-primary-foreground dark:bg-muted-foreground overflow-hidden overflow-y-scroll">
         {authConfigured ? (
-          <ClerkProvider signInUrl="/login" signUpUrl="/register" signInFallbackRedirectUrl="/" signUpFallbackRedirectUrl="/">
+          <ClerkProvider signInUrl="/login" signUpUrl="/register" signInForceRedirectUrl="/" signInFallbackRedirectUrl="/" signUpFallbackRedirectUrl="/">
             {content}
           </ClerkProvider>
         ) : content}
