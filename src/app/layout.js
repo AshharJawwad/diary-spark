@@ -47,7 +47,7 @@ export default function RootLayout({ children }) {
   return (
     <html
       lang="en"
-      className={`${inter.variable} ${roboto.variable} h-full antialiased`}
+      className={`${inter.variable} ${roboto.variable} h-full antialiased no-scrollbar`}
       suppressHydrationWarning
     >
       <body className="min-h-full flex flex-col font-body bg-primary-foreground dark:bg-muted-foreground overflow-hidden overflow-y-scroll">
