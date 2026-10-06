@@ -7,6 +7,7 @@ import { ThemeProvider } from "@/components/ThemeProvider";
 import ActionBar from "@/components/ActionBar";
 import { ClerkProvider } from "@clerk/nextjs";
 import { usePathname } from "next/navigation";
+import Footer from "@/components/Footer";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -41,6 +42,7 @@ export default function RootLayout({ children }) {
       {!dashboardRoute && <Navbar authConfigured={authConfigured} />}
       {!dashboardRoute && <ActionBar />}
       {children}
+      {!dashboardRoute && <Footer />}
     </ThemeProvider>
   );
 
