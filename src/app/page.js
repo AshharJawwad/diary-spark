@@ -1,3 +1,4 @@
+import { Features } from "@/components/Features";
 import { Button } from "@/components/ui/button";
 import { ChevronRight } from "lucide-react";
 
@@ -55,69 +56,7 @@ export default function Home() {
       </div>
 
       {/* Feature Cards */}
-      <div className="w-full mx-auto pt-8 pb-8 md:pt-12 md:pb-12 border-t border-b mt-5 mb-5">
-        <div className="grid grid-cols-1 md:grid-cols-2">
-          <div className="w-full h-96 md:h-155 justify-center bg-background">
-            <div className="flex flex-col h-full items-center justify-center gap-6">
-              <span className="text-xs text-center font-body border rounded-sm px-1.5 py-0.5">
-                Blogs
-              </span>
-              <h3 className="font-display font-semibold text-center text-3xl md:text-4xl text-gray-800 dark:text-gray-200">
-                For Readers
-                <span className="flex flex-col">Knowledge That Matters</span>
-              </h3>
-              <Button className="py-5 px-6 rounded-full text-lg mt-8 cursor-pointer">
-                Read Blogs
-              </Button>
-            </div>
-          </div>
-          <div className="w-full h-96 md:h-155 justify-center bg-background">
-            <div className="flex flex-col h-full items-center justify-center gap-6">
-              <span className="text-xs text-center font-body border rounded-sm px-1.5 py-0.5">
-                Trivia
-              </span>
-              <h3 className="font-display font-semibold text-center text-3xl md:text-4xl text-gray-800 dark:text-gray-200">
-                For Readers
-                <span className="flex flex-col">Knowledge That Matters</span>
-              </h3>
-              <Button
-                variant="outline"
-                className="py-5 px-6 rounded-full text-lg mt-8 cursor-pointer"
-              >
-                View Trivia
-              </Button>
-            </div>
-          </div>
-          <div className="w-full h-96 md:h-155 justify-center bg-background">
-            <div className="flex flex-col h-full items-center justify-center gap-6">
-              <span className="text-xs text-center font-body border rounded-sm px-1.5 py-0.5">
-                Blogs
-              </span>
-              <h3 className="font-display font-semibold text-center text-3xl md:text-4xl text-gray-800 dark:text-gray-200">
-                For Readers
-                <span className="flex flex-col">Knowledge That Matters</span>
-              </h3>
-              <Button className="py-5 px-6 rounded-full text-lg mt-8 cursor-pointer">
-                Read Blogs
-              </Button>
-            </div>
-          </div>
-          <div className="w-full h-96 md:h-155 justify-center bg-background">
-            <div className="flex flex-col h-full items-center justify-center gap-6">
-              <span className="text-xs text-center font-body border rounded-sm px-1.5 py-0.5">
-                Blogs
-              </span>
-              <h3 className="font-display font-semibold text-center text-3xl md:text-4xl text-gray-800 dark:text-gray-200">
-                For Readers
-                <span className="flex flex-col">Knowledge That Matters</span>
-              </h3>
-              <Button className="py-5 px-6 rounded-full text-lg mt-8 cursor-pointer">
-                Read Blogs
-              </Button>
-            </div>
-          </div>
-        </div>
-      </div>
+      <Features />
     </div>
   );
 }

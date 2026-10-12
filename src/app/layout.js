@@ -52,7 +52,7 @@ export default function RootLayout({ children }) {
       className={`${inter.variable} ${roboto.variable} h-full antialiased no-scrollbar`}
       suppressHydrationWarning
     >
-      <body className="min-h-full flex flex-col font-body bg-primary-foreground dark:bg-muted-foreground overflow-hidden overflow-y-scroll">
+      <body className="min-h-full flex flex-col font-body overflow-hidden overflow-y-scroll">
         {authConfigured ? (
           <ClerkProvider
             signInUrl="/login"
