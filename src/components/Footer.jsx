@@ -4,13 +4,13 @@ import React from "react";
 
 export default function Footer() {
   return (
-    <footer className="w-full min-h-76 mx-auto p-4">
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 px-12 py-8 pb-16 gap-x-96 justify-around border-b">
-        <div className="flex">
+    <footer className="md:w-full min-h-76 mx-auto p-4">
+      <div className="grid grid-cols-2 lg:grid-cols-4 px-12 py-8 pb-16 gap-x-40 md:gap-x-96 justify-around border-b">
+        <div className="md:flex">
           <Image src="/logo.png" alt="Logo" width={128} height={128} />
           <h2 className="text-3xl font-bold font-display">DiarySpark</h2>
         </div>
-        <div className="flex flex-col gap-y-1.5 space-x-36">
+        <div className="flex flex-col gap-y-1.5 space-x-36 mb-6">
           <h5 className="text-xl font-bold font-display">Main</h5>
           <Link href="/blog" className="text-lg font-medium font-body">
             Blog
@@ -25,7 +25,7 @@ export default function Footer() {
             Hubb
           </Link>
         </div>
-        <div className="flex flex-col gap-y-1.5 space-x-36">
+        <div className="flex flex-col gap-y-1.5 space-x-36 mb-6">
           <h5 className="text-xl font-bold font-display">Legal</h5>
           <Link href="/privacy" className="text-lg font-medium font-body">
             Privacy
@@ -37,7 +37,7 @@ export default function Footer() {
             Cookies
           </Link>
         </div>
-        <div className="flex flex-col gap-y-1.5 space-x-36">
+        <div className="flex flex-col gap-y-1.5 space-x-36 mb-6">
           <h5 className="text-xl font-bold font-display">Company</h5>
           <Link href="/about" className="text-lg font-medium font-body">
             About
