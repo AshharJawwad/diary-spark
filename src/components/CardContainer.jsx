@@ -32,7 +32,7 @@ export const CardContainer = () => {
       {/* Trivia Section */}
       <div className="flex flex-col w-full min-h-96 p-5 mt-5 md:w-7xl mx-auto rounded-lg">
         <div className="flex justify-between">
-          <h3 className="text-2xl font-extrabold font-display">Blogs</h3>
+          <h3 className="text-2xl font-extrabold font-display">Trivias</h3>
 
           <Button
             variant="ghost"
@@ -49,7 +49,7 @@ export const CardContainer = () => {
       {/* Quest Section */}
       <div className="flex flex-col w-full min-h-96 p-5 mt-5 md:w-7xl mx-auto rounded-lg">
         <div className="flex justify-between">
-          <h3 className="text-2xl font-extrabold font-display">Blogs</h3>
+          <h3 className="text-2xl font-extrabold font-display">Quests</h3>
 
           <Button
             variant="ghost"
