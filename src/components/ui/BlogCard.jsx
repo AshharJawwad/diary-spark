@@ -24,16 +24,16 @@ export const BlogCard = () => {
               How to be Happy?
             </h2>
 
-            <p className="text-sm text-muted-foreground font-body">
+            <p className="text-sm text-gray-400 font-body">
               Sometimes we will be sad and that&apos;s all right!
             </p>
 
             <div className="flex flex-wrap justify-between items-center gap-x-2 gap-y-1">
-              <div className="text-sm text-muted-foreground font-body">
+              <div className="text-sm text-gray-400 font-body">
                 By Ashhar Jawwad
               </div>
 
-              <time dateTime="2026-10-13" className="text-sm text-muted-foreground font-body">
+              <time dateTime="2026-10-13" className="text-sm text-gray-400 font-body">
                 13th Oct 2026
               </time>
             </div>

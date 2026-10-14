@@ -186,7 +186,7 @@ export default function Navbar({ authConfigured = false }) {
 
         <div className="flex gap-3 mr-4">
           <div className="hidden md:flex items-center space-x-3">
-            <Button className="px-4 py-1 w-32 font-semibold border rounded-full text-lg text-center cursor-pointer">
+            <Button className="px-4 py-1.5 w-32 h-9 font-semibold border rounded-full text-lg text-center cursor-pointer">
               Subscribe
             </Button>
             {authConfigured ? (
