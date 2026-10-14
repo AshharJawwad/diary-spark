@@ -136,7 +136,7 @@ export default function Navbar({ authConfigured = false }) {
   };
 
   return (
-    <nav className="fixed w-full h-36 md:h-16 items-center">
+    <nav className="fixed z-10 w-full h-36 md:h-16 items-center">
       <div className="relative flex items-center justify-between lg:justify-around pt-3 pl-3 pb-3 bg-background border-b border-b-gray-200 dark:border-b-gray-800">
         <h1 className="font-extrabold text-3xl md:text-4xl lg:text-4xl text-primary font-display">
           DiarySpark
