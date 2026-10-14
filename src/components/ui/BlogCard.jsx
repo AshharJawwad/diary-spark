@@ -2,7 +2,7 @@ import Image from "next/image";
 
 export const BlogCard = () => {
   return (
-    <article className="relative flex w-full max-w-72 min-h-80 flex-col justify-end mt-4 p-3 rounded-lg shadow-md">
+    <div className="relative flex w-full max-w-72 min-h-80 flex-col justify-end mt-4 p-3 rounded-lg shadow-md">
       <div className="absolute inset-0 overflow-hidden rounded-lg">
         <Image
           src="/images/blogimage.jpg"
@@ -40,6 +40,6 @@ export const BlogCard = () => {
           </div>
         </div>
       </div>
-    </article>
+    </div>
   );
 };

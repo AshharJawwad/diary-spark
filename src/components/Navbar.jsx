@@ -21,6 +21,7 @@ import {
   getRegistrationStatus,
   getServerRegistrationStatus,
   subscribeRegistration,
+  rememberRegistration,
 } from "@/lib/browser-registration.mjs";
 
 function NavbarAccount({ children, onSignIn, mobile = false }) {
@@ -28,6 +29,7 @@ function NavbarAccount({ children, onSignIn, mobile = false }) {
   const previousSignedIn = useRef(isSignedIn);
   useEffect(() => {
     if (!isLoaded) return;
+    if (isSignedIn) rememberRegistration(true);
     if (isSignedIn && previousSignedIn.current !== true) onSignIn?.();
     previousSignedIn.current = isSignedIn;
   }, [isLoaded, isSignedIn, onSignIn]);
@@ -96,7 +98,7 @@ export default function Navbar({ authConfigured = false }) {
     registrationStatus === "registered" ? (
       <Link
         href="/login"
-        className="rounded-lg bg-primary px-5 py-1.5 text-center font-semibold text-primary-foreground"
+        className="rounded-full bg-primary px-5 py-1.5 text-center font-semibold text-primary-foreground"
       >
         Login
       </Link>
@@ -105,7 +107,7 @@ export default function Navbar({ authConfigured = false }) {
         variant="outline"
         nativeButton={false}
         render={<Link href="/register" prefetch={true} />}
-        className="rounded-lg px-5 py-1.5 text-center font-semibold"
+        className="rounded-full px-5 py-1.5 text-center font-semibold"
       >
         Register
       </Button>
@@ -114,7 +116,8 @@ export default function Navbar({ authConfigured = false }) {
     registrationStatus === "registered" ? (
       <Link
         href="/login"
-        onClick={() => setSheetOpen(false)}
+        prefetch={true}
+        onNavigate={closeSheet}
         className="block w-full rounded-full bg-primary px-5 py-2 text-center font-semibold text-primary-foreground"
       >
         Login
@@ -122,7 +125,8 @@ export default function Navbar({ authConfigured = false }) {
     ) : (
       <Link
         href="/register"
-        onClick={() => setSheetOpen(false)}
+        prefetch={true}
+        onNavigate={closeSheet}
         className="block w-full rounded-full bg-primary px-5 py-2 text-center font-semibold text-primary-foreground"
       >
         Register
@@ -309,28 +313,7 @@ export default function Navbar({ authConfigured = false }) {
                   <SheetFooter>
                     {authConfigured ? (
                       <NavbarAccount mobile onSignIn={closeSheet}>
-                        <Link
-                          href="/login"
-                          prefetch={true}
-                          onNavigate={() => setSheetOpen(false)}
-                          className="block w-full rounded-lg bg-primary px-5 py-0.5 text-lg text-center font-semibold text-primary-foreground"
-                        >
-                          Login
-                        </Link>
-                        <Button
-                          variant="outline"
-                          nativeButton={false}
-                          render={
-                            <Link
-                              href="/register"
-                              prefetch={true}
-                              onNavigate={() => setSheetOpen(false)}
-                            />
-                          }
-                          className="block w-full rounded-lg px-5 py-0.5 text-lg text-center font-semibold"
-                        >
-                          Register
-                        </Button>
+                        {mobileAccountLink}
                       </NavbarAccount>
                     ) : (
                       mobileAccountLink
