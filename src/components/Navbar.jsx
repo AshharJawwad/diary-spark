@@ -23,6 +23,7 @@ import {
   subscribeRegistration,
   rememberRegistration,
 } from "@/lib/browser-registration.mjs";
+import Image from "next/image";
 
 function NavbarAccount({ children, onSignIn, mobile = false }) {
   const { isLoaded, isSignedIn } = useAuth();
@@ -142,9 +143,7 @@ export default function Navbar({ authConfigured = false }) {
   return (
     <nav className="fixed z-10 w-full h-36 md:h-16 items-center">
       <div className="relative flex items-center justify-between lg:justify-around pt-3 pl-3 pb-3 bg-background border-b border-b-gray-200 dark:border-b-gray-800">
-        <h1 className="font-extrabold text-3xl md:text-4xl lg:text-4xl text-primary font-display">
-          DiarySpark
-        </h1>
+          <Image src="/images/diary-spark-wordmark.png" href="/" alt="diaryspark logo" width={80} height={14} className="w-80 h-14 cursor-pointer" />
 
         <ul className="hidden lg:flex items-center text-lg gap-8 font-semibold">
           <Link

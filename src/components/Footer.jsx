@@ -6,9 +6,9 @@ export default function Footer() {
   return (
     <footer className="md:w-full min-h-76 mx-auto p-4 bg-muted">
       <div className="grid grid-cols-2 lg:grid-cols-4 px-12 py-8 pb-16 gap-x-40 md:gap-x-56 justify-around border-b">
-        <div className="flex flex-col space-y-2 md:ml-16">
-          <Image src="/next.svg" alt="Logo" width={128} height={128} className="rounded-full h-24 w-24" />
-          <h2 className="text-3xl font-bold font-display">DiarySpark</h2>
+        <div className="flex flex-col space-y-1 md:ml-16">
+          <Image src="/images/diary-spark-wordmark.png" alt="Logo" width={1152} height={24} className="rounded-lg h-24 w-6xl" />
+          <span className="text-lg font-base font-body">All the logos are the &copy; Copyrigth of the DiarySpark</span>
         </div>
         <div className="flex flex-col gap-y-1.5 space-x-36 mb-6">
           <h5 className="text-xl font-bold font-display">Main</h5>
