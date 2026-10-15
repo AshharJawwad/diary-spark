@@ -13,6 +13,9 @@
 # testing
 /coverage
 
+# Ignores the test folder
+/tests/
+
 # next.js
 /.next/
 /out/
